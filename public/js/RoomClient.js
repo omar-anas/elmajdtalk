@@ -733,7 +733,7 @@ class RoomClient {
     async produce(type, deviceId = null, swapCamera = false, init = false) {
         let mediaConstraints = {};
         let audio = false;
-        let screen = false;
+        let screen = true;
         switch (type) {
             case mediaType.audio:
                 this.isAudioAllowed = true;
@@ -1184,7 +1184,7 @@ class RoomClient {
         }
 
         if (this.enableSharingLayers) {
-            console.log('SCREEN SIMULCAST/SVC ENABLED');
+       
 
             const firstVideoCodec = this.device.rtpCapabilities.codecs.find((c) => c.kind === 'video');
             console.log('SCREEN ENCODING: first codec available', { firstVideoCodec: firstVideoCodec });
@@ -1325,7 +1325,7 @@ class RoomClient {
                 BUTTONS.producerVideo.videoPrivacyButton && !isScreen && vb.appendChild(vp);
                 BUTTONS.producerVideo.snapShotButton && vb.appendChild(ts);
                 BUTTONS.producerVideo.fullScreenButton && this.isVideoFullScreenSupported && vb.appendChild(fs);
-                if (!this.isMobileDevice) vb.appendChild(pn);
+                if (true/* !this.isMobileDevice */) vb.appendChild(pn);
                 d.appendChild(elem);
                 d.appendChild(pm);
                 d.appendChild(i);
@@ -1344,7 +1344,7 @@ class RoomClient {
                 this.checkPeerInfoStatus(this.peer_info);
                 if (isScreen) pn.click();
                 handleAspectRatio();
-                if (!this.isMobileDevice) {
+                if (true/* !this.isMobileDevice */) {
                     this.setTippy(pn.id, 'Toggle Pin', 'top-end');
                     this.setTippy(ts.id, 'Snapshot', 'top-end');
                     this.setTippy(vp.id, 'Toggle video privacy', 'top-end');
@@ -1712,7 +1712,7 @@ class RoomClient {
                 BUTTONS.consumerVideo.sendMessageButton && vb.appendChild(sm);
                 BUTTONS.consumerVideo.snapShotButton && vb.appendChild(ts);
                 BUTTONS.consumerVideo.fullScreenButton && this.isVideoFullScreenSupported && vb.appendChild(fs);
-                if (!this.isMobileDevice) vb.appendChild(pn);
+                if (true/* !this.isMobileDevice */) vb.appendChild(pn);
                 d.appendChild(elem);
                 d.appendChild(i);
                 d.appendChild(p);
@@ -1931,7 +1931,7 @@ class RoomClient {
     // ####################################################
 
     shareScreen() {
-        if (!this.isMobileDevice && (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia)) {
+        if (true/* !this.isMobileDevice */ && (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia)) {
             this.sound('open');
             // startScreenButton.click(); // Chrome - Opera - Edge - Brave
             // handle error: getDisplayMedia requires transient activation from a user gesture on Safari - FireFox
@@ -2392,7 +2392,7 @@ class RoomClient {
                     return userLog('info', 'Full Screen not allowed if video on privacy mode', 'top-end');
                 }
                 if (!videoPlayer.hasAttribute('controls')) {
-                    if ((this.isMobileDevice && this.isVideoOnFullScreen) || !this.isMobileDevice) {
+                    if ((this.isMobileDevice && this.isVideoOnFullScreen) || true/* !this.isMobileDevice */) {
                         videoPlayer.style.pointerEvents = this.isVideoOnFullScreen ? 'auto' : 'none';
                         this.toggleFullScreen(videoPlayer);
                         this.isVideoOnFullScreen = this.isVideoOnFullScreen ? false : true;
