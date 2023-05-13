@@ -241,7 +241,7 @@ async function initEnumerateDevices() {
     console.log('01 ----> init Enumerate Devices');
     await initEnumerateVideoDevices();
     await initEnumerateAudioDevices();
-    if (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia || true) {
+    if (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia) {
         BUTTONS.main.startScreenButton && show(initStartScreenButton);
     }
     whoAreYou();
@@ -768,7 +768,7 @@ function roomIsReady() {
         rc.makeDraggable(sendFileDiv, imgShareSend);
         rc.makeDraggable(receiveFileDiv, imgShareReceive);
         rc.makeDraggable(lobby, lobbyHeader);
-        if (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia || true) {
+        if (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia) {
             BUTTONS.main.startScreenButton && show(startScreenButton);
         }
         BUTTONS.chat.chatMaxButton && show(chatMaxButton);
