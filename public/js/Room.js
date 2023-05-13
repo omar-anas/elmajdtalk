@@ -454,7 +454,7 @@ function getPeerInfo() {
         peer_screen: isScreenAllowed,
         peer_video_privacy: isVideoPrivacyActive,
         peer_hand: false,
-        is_desktop_device: !DetectRTC.isMobileDevice && !isTabletDevice && !isIPadDevice,
+        is_desktop_device: true/* DetectRTC.isMobileDevice && !isTabletDevice && !isIPadDevice */,
         is_mobile_device: false,
         is_tablet_device: isTabletDevice,
         is_ipad_pro_device: isIPadDevice,
@@ -755,7 +755,7 @@ function roomIsReady() {
     show(chatCleanTextButton);
     show(chatPasteButton);
     show(chatSendButton);
-    if (DetectRTC.isMobileDevice) {
+    if (false) {
         BUTTONS.main.swapCameraButton && show(swapCameraButton);
         rc.chatMaximize();
         hide(chatMaxButton);
@@ -1116,7 +1116,7 @@ function handleButtons() {
 // ####################################################
 
 function setButtonsInit() {
-    if (!DetectRTC.isMobileDevice) {
+    if (true /* !DetectRTC.isMobileDevice */) {
         setTippy('initAudioButton', 'Toggle the audio', 'top');
         setTippy('initVideoButton', 'Toggle the video', 'top');
         setTippy('initAudioVideoButton', 'Toggle the audio & video', 'top');
@@ -2249,7 +2249,7 @@ async function getParticipantsTable(peers) {
 
 function setParticipantsTippy(peers) {
     //
-    if (!DetectRTC.isMobileDevice) {
+    if (true/* !DetectRTC.isMobileDevice */) {
         setTippy('muteAllButton', 'Mute all participants', 'top');
         setTippy('hideAllButton', 'Hide all participants', 'top');
         setTippy('sendAllButton', 'Share file to all', 'top');
