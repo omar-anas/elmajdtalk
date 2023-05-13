@@ -702,7 +702,7 @@ function shareRoomByEmail(message) {
 // ####################################################
 // JOIN ROOM
 // ####################################################
-
+//3
 function joinRoom(peer_name, room_id) {
     if (rc && rc.isConnected()) {
         console.log('Already connected to a room');
