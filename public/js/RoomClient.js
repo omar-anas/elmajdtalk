@@ -145,13 +145,13 @@ class RoomClient {
         this.consumerTransport = null;
         this.device = null;
 
-        this.isMobileDevice = DetectRTC.isMobileDevice;
+        this.isMobileDevice = false;
 
         this.isMySettingsOpen = false;
 
         this._isConnected = false;
         this.isVideoOnFullScreen = false;
-        this.isVideoFullScreenSupported = peer_info.is_mobile_device && peer_info.os_name === 'iOS' ? false : true;
+        this.isVideoFullScreenSupported = peer_info.is_mobile_device && peer_info.os_name === 'iOS' ? true : true;
         this.isChatOpen = false;
         this.isChatEmojiOpen = false;
         this.showChatOnMessage = true;

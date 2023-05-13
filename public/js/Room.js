@@ -122,7 +122,7 @@ let initStream = null;
 // ####################################################
 
 function initClient() {
-    if (!DetectRTC.isMobileDevice) {
+    
         setTippy('shareButton', 'Share room', 'right');
         setTippy('hideMeButton', 'Toggle hide me', 'right');
         setTippy('startAudioButton', 'Start the audio', 'right');
@@ -191,7 +191,7 @@ function initClient() {
         setTippy('chatMinButton', 'Minimize', 'right');
         setTippy('participantsCloseBtn', 'Close', 'left');
         setTippy('participantsSaveBtn', 'Save participants info', 'right');
-    }
+    
     setupWhiteboard();
     initEnumerateDevices();
 }
@@ -455,7 +455,7 @@ function getPeerInfo() {
         peer_video_privacy: isVideoPrivacyActive,
         peer_hand: false,
         is_desktop_device: !DetectRTC.isMobileDevice && !isTabletDevice && !isIPadDevice,
-        is_mobile_device: DetectRTC.isMobileDevice,
+        is_mobile_device: false,
         is_tablet_device: isTabletDevice,
         is_ipad_pro_device: isIPadDevice,
         os_name: DetectRTC.osName,
