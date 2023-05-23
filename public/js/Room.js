@@ -496,7 +496,7 @@ function whoAreYou() {
         allowOutsideClick: false,
         allowEscapeKey: false,
         background: swalBackground,
-        title: 'MiroTalk SFU',
+        title: 'Elmajd academy',
         input: 'text',
         inputPlaceholder: 'Enter your name',
         inputValue: default_name,
