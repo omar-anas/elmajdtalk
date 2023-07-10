@@ -378,6 +378,7 @@ function addChild(device, els) {
 function getScreen() {
     let qs = new URLSearchParams(window.location.search);
     let screen = filterXSS(qs.get('screen'));
+    console.log('380 value of screen' ,screen)
     if (screen) {
         screen = screen.toLowerCase();
         let queryScreen = screen === '1' || screen === 'true';
