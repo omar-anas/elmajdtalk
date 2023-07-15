@@ -996,24 +996,12 @@ class RoomClient {
                     },
                 };
                 break;
-            case 'standard':
+            case 'qvga':
                 videoConstraints = {
                     audio: false,
                     video: {
-                        width: { ideal: 4096 },
-                        height: { ideal: 2160 },
-                        deviceId: deviceId,
-                        aspectRatio: 1.777,
-                        frameRate: frameRate,
-                    },
-                }; // video cam constraints low bandwidth
-                break;
-            case 'SVGA':
-                videoConstraints = {
-                    audio: false,
-                    video: {
-                        width: { exact: 800 },
-                        height: { exact: 600 },
+                        width: { exact: 320 },
+                        height: { exact: 240 },
                         deviceId: deviceId,
                         aspectRatio: 1.777,
                         frameRate: frameRate,
