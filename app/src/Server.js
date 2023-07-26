@@ -487,7 +487,7 @@ function startServer() {
     io.on('connection', (socket) => {
         socket.on('createRoom', async ({ room_id }, callback) => {
             socket.room_id = room_id;
-
+            
             if (roomList.has(socket.room_id)) {
                 callback({ error: 'already exists' });
             } else {
