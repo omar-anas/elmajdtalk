@@ -1526,7 +1526,7 @@ function handleRoomClientEvents() {
         if (survey.enabled) {
             leaveFeedback();
         } else {
-            openURL('/newroom');
+            openURL('https://www.google.com/');
         }
     });
 }
