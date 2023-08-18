@@ -1998,7 +1998,7 @@ class RoomClient {
     }
 
     
-    redirect(){
+    redirect(offline = false){
         let clean = function () {
             this._isConnected = false;
             this.consumerTransport.close();
