@@ -884,7 +884,7 @@ function handleButtons() {
         isButtonsBarOver = false;
     };
     exitButton.onclick = () => {
-        rc.exitRoom();
+        window.location.href('https://www.google.com/')
     };
     shareButton.onclick = () => {
         shareRoom(true);
