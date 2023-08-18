@@ -884,7 +884,7 @@ function handleButtons() {
         isButtonsBarOver = false;
     };
     exitButton.onclick = () => {
-        rc.exitRoom();
+        rc.redirectPage();
     };
     shareButton.onclick = () => {
         shareRoom(true);

@@ -1997,6 +1997,36 @@ class RoomClient {
         this.exit();
     }
 
+    
+    redirect(){
+        let clean = function () {
+            this._isConnected = false;
+            this.consumerTransport.close();
+            this.producerTransport.close();
+            this.socket.off('disconnect');
+            this.socket.off('newProducers');
+            this.socket.off('consumerClosed');
+        }.bind(this);
+
+        if (!offline) {
+            this.socket
+            .request('exitRoom')
+            .then((e) => console.log('Exit Room', e))
+                .catch((e) => console.warn('Exit Room ', e))
+                .finally(
+                    function () {
+                        clean();
+                    }.bind(this),
+                );
+            } else {
+            clean();
+        }
+        this.event(_EVENTS.exitRoom);
+    }
+    
+    redirectPage(){
+        this.redirect()
+    }
     // ####################################################
     // HELPERS
     // ####################################################
