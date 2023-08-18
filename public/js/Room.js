@@ -1690,7 +1690,8 @@ function isIpad(userAgent) {
 }
 
 function openURL(url, blank = false) {
-    blank ? window.open(url, '_blank') : (window.location.href = url);
+    window.location.reload();
+    // blank ? window.open(url, '_blank') : (window.location.href = url);
 }
 
 function setCookie(name, value, expDays) {
