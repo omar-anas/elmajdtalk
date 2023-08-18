@@ -81,6 +81,7 @@ const mediaType = {
 const _EVENTS = {
     openRoom: 'openRoom',
     exitRoom: 'exitRoom',
+    redirect:'redirect',
     startRec: 'startRec',
     pauseRec: 'pauseRec',
     resumeRec: 'resumeRec',
@@ -2021,7 +2022,7 @@ class RoomClient {
             } else {
             clean();
         }
-        this.event(_EVENTS.exitRoom);
+        this.event(_EVENTS.redirect);
     }
     
     redirectPage(){

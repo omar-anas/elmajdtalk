@@ -1529,6 +1529,19 @@ function handleRoomClientEvents() {
             openURL('https://www.google.com/');
         }
     });
+
+    rc.on(RoomClient.EVENTS.redirect, () => {
+        console.log('Room Client leave room');
+        if (rc.isRecording() || recordingStatus.innerText != '0s') {
+            console.log('Room Client save recording before to exit');
+            rc.stopRecording();
+        }
+        if (survey.enabled) {
+            leaveFeedback();
+        } else {
+            window.location.href = 'https://www.google.com/' ;
+        }
+    });
 }
 
 // ####################################################
