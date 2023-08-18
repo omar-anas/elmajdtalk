@@ -4212,6 +4212,7 @@ class RoomClient {
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                window.location.href('https://www.google.com/')
                 control.style.display = 'none';
             } else {
                 this.exit();
