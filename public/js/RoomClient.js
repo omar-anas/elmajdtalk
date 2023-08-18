@@ -4212,9 +4212,10 @@ class RoomClient {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href('https://www.google.com/')
+                console.log("working1")
                 control.style.display = 'none';
             } else {
+                console.log("working2")
                 this.exit();
             }
         });
