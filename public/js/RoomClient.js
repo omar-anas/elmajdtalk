@@ -4203,7 +4203,7 @@ class RoomClient {
             title: 'Room has lobby enabled',
             text: 'Asking to join meeting...',
             confirmButtonText: `Ok`,
-            denyButtonText: `not Leave room`,
+            denyButtonText: `Leave room`,
             showClass: {
                 popup: 'animate__animated animate__fadeInDown',
             },
@@ -4212,10 +4212,8 @@ class RoomClient {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("working1")
                 control.style.display = 'none';
             } else {
-                
                 this.exit();
             }
         });
