@@ -264,7 +264,7 @@ async function initEnumerateVideoDevices() {
         .getUserMedia({ video: true })
         .then((stream) => {
             enumerateVideoDevices(stream);
-            isVideoAllowed = true;
+            isVideoAllowed = false;
         })
         .catch(() => {
             isVideoAllowed = false;
@@ -534,10 +534,7 @@ function whoAreYou() {
         }
         getPeerInfo();
         joinRoom(peer_name, room_id);
-        setVideoButtonsDisabled(true);
-        if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
-        if (isHideMeActive) rc.handleHideMe();
-        rc.produce(RoomClient.mediaType.video, videoSelect.value);
+        
     }
 }
 
