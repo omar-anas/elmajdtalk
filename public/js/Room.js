@@ -264,7 +264,7 @@ async function initEnumerateVideoDevices() {
         .getUserMedia({ video: true })
         .then((stream) => {
             enumerateVideoDevices(stream);
-            isVideoAllowed = false;
+            isVideoAllowed = true;
         })
         .catch(() => {
             isVideoAllowed = false;
@@ -445,7 +445,7 @@ function getPeerInfo() {
         peer_name: peer_name,
         peer_presenter: isPresenter,
         peer_audio: isAudioAllowed,
-        peer_video: isVideoAllowed,
+        peer_video: false,
         peer_screen: isScreenAllowed,
         peer_video_privacy: isVideoPrivacyActive,
         peer_hand: false,
