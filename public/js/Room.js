@@ -528,8 +528,7 @@ function whoAreYou() {
             joinRoom(peer_name, room_id);
         });
     }else{
-        stopTracks(initStream);
-                hide(initVideo);
+        
         if (!getCookie(room_id + '_name')) {
             window.localStorage.peer_name = default_name;
         }
