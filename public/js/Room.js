@@ -520,23 +520,25 @@ function whoAreYou() {
                 peer_name = name;
             },
         }).then(() => {
-            
+            if (initStream && !joinRoomWithScreen) {
                 stopTracks(initStream);
                 hide(initVideo);
-            
+            }
             getPeerInfo();
             joinRoom(peer_name, room_id);
         });
     }else{
+        stopTracks(initStream);
+                hide(initVideo);
         if (!getCookie(room_id + '_name')) {
             window.localStorage.peer_name = default_name;
         }
         setCookie(room_id + '_name', default_name, 30);
         peer_name = default_name;
-        if (initStream && !joinRoomWithScreen) {
+         
             stopTracks(initStream);
             hide(initVideo);
-        }
+        
         getPeerInfo();
         joinRoom(peer_name, room_id);
     }
