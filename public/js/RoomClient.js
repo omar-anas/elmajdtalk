@@ -269,6 +269,7 @@ class RoomClient {
             });
     }
 
+
     async join(data) {
         this.socket
             .request('join', data)
@@ -289,40 +290,7 @@ class RoomClient {
                         let peer_info = peers.get(peer).peer_info;
                         if (peer_info.peer_name == this.peer_name) {
                             console.log('00-WARNING ----> Username already in use');
-                            return Swal.fire({
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                background: swalBackground,
-                                title: 'Elmajd Academy',
-                                input: 'text',
-                                inputPlaceholder: 'Enter your name',
-                                inputValue: default_name,
-                                html: initUser, // Inject HTML
-                                confirmButtonText: `Join meeting`,
-                                showClass: {
-                                    popup: 'animate__animated animate__fadeInDown',
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__fadeOutUp',
-                                },
-                                inputValidator: (name) => {
-                                    if (!name) return 'Please enter your name';
-                                    name = filterXSS(name);
-                                    if (isHtml(name)) return 'Invalid name!';
-                                    if (!getCookie(room_id + '_name')) {
-                                        window.localStorage.peer_name = name;
-                                    }
-                                    setCookie(room_id + '_name', name, 30);
-                                    peer_name = name;
-                                },
-                            }).then(() => {
-                                if (initStream && !joinRoomWithScreen) {
-                                    stopTracks(initStream);
-                                    hide(initVideo);
-                                }
-                                getPeerInfo();
-                                joinRoom(peer_name, room_id);
-                            });
+                            return this.selectingName();
                         }
                     }
                     await this.joinAllowed(room);
@@ -704,6 +672,42 @@ class RoomClient {
     // CHECK USER
     // ####################################################
 
+    async selectingName(){
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            background: swalBackground,
+            title: 'Elmajd Academy',
+            input: 'text',
+            inputPlaceholder: 'Enter your name',
+            inputValue: default_name,
+            html: initUser, // Inject HTML
+            confirmButtonText: `Join meeting`,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+            },
+            inputValidator: (name) => {
+                if (!name) return 'Please enter your name';
+                name = filterXSS(name);
+                if (isHtml(name)) return 'Invalid name!';
+                if (!getCookie(room_id + '_name')) {
+                    window.localStorage.peer_name = name;
+                }
+                setCookie(room_id + '_name', name, 30);
+                peer_name = name;
+            },
+        }).then(() => {
+            if (initStream && !joinRoomWithScreen) {
+                stopTracks(initStream);
+                hide(initVideo);
+            }
+            getPeerInfo();
+            joinRoom(peer_name, room_id);
+        });
+    }
     async userNameAlreadyInRoom() {
         this.sound('alert');
         Swal.fire({
