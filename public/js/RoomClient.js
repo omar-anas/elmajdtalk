@@ -290,7 +290,7 @@ class RoomClient {
                         let peer_info = peers.get(peer).peer_info;
                         if (peer_info.peer_name == this.peer_name) {
                             console.log('00-WARNING ----> Username already in use');
-                            return this.selectingName();
+                            return this.userNameAlreadyInRoom();
                         }
                     }
                     await this.joinAllowed(room);
