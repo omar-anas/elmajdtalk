@@ -520,10 +520,10 @@ function whoAreYou() {
                 peer_name = name;
             },
         }).then(() => {
-            if (initStream && !joinRoomWithScreen) {
+            
                 stopTracks(initStream);
                 hide(initVideo);
-            }
+            
             getPeerInfo();
             joinRoom(peer_name, room_id);
         });
