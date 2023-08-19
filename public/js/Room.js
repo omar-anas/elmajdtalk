@@ -490,8 +490,8 @@ function whoAreYou() {
     }
 
     const initUser = document.getElementById('initUser');
-    initUser.classList.toggle('hidden');
     if(!default_name){
+        initUser.classList.toggle('hidden');
         
         Swal.fire({
             allowOutsideClick: false,
