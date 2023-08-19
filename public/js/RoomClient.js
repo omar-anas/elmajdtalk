@@ -288,10 +288,10 @@ class RoomClient {
                     const peers = new Map(JSON.parse(room.peers));
                     for (let peer of Array.from(peers.keys()).filter((id) => id !== this.peer_id)) {
                         let peer_info = peers.get(peer).peer_info;
-                        if (peer_info.peer_name == this.peer_name) {
-                            console.log('00-WARNING ----> Username already in use');
-                            return this.userNameAlreadyInRoom();
-                        }
+                        // if (peer_info.peer_name == this.peer_name) {
+                        //     console.log('00-WARNING ----> Username already in use');
+                        //     return this.userNameAlreadyInRoom();
+                        // }
                     }
                     await this.joinAllowed(room);
                 }.bind(this),
