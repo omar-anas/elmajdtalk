@@ -511,7 +511,7 @@ function whoAreYou() {
                 if (!getCookie(room_id + '_name')) {
                     window.localStorage.peer_name = name;
                 }
-                setCookie(room_id + '_name', name, 30);
+                // setCookie(room_id + '_name', name, 30);
                 peer_name = name;
             },
         }).then(() => {
@@ -526,7 +526,7 @@ function whoAreYou() {
         if (!getCookie(room_id + '_name')) {
             window.localStorage.peer_name = default_name;
         }
-        setCookie(room_id + '_name', default_name, 30);
+        // setCookie(room_id + '_name', default_name, 30);
         peer_name = default_name;
         if (initStream && !joinRoomWithScreen) {
             stopTracks(initStream);
