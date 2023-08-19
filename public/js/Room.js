@@ -491,41 +491,55 @@ function whoAreYou() {
 
     const initUser = document.getElementById('initUser');
     initUser.classList.toggle('hidden');
-
-    Swal.fire({
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        background: swalBackground,
-        title: 'Elmajd academy',
-        input: 'text',
-        inputPlaceholder: 'Enter your name',
-        inputValue: default_name,
-        html: initUser, // Inject HTML
-        confirmButtonText: `Join meeting`,
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-        },
-        inputValidator: (name) => {
-            if (!name) return 'Please enter your name';
-            name = filterXSS(name);
-            if (isHtml(name)) return 'Invalid name!';
-            if (!getCookie(room_id + '_name')) {
-                window.localStorage.peer_name = name;
+    if(!default_name){
+        
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            background: swalBackground,
+            title: 'Elmajd Academy',
+            input: 'text',
+            inputPlaceholder: 'Enter your name',
+            inputValue: default_name,
+            html: initUser, // Inject HTML
+            confirmButtonText: `Join meeting`,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+            },
+            inputValidator: (name) => {
+                if (!name) return 'Please enter your name';
+                name = filterXSS(name);
+                if (isHtml(name)) return 'Invalid name!';
+                if (!getCookie(room_id + '_name')) {
+                    window.localStorage.peer_name = name;
+                }
+                setCookie(room_id + '_name', name, 30);
+                peer_name = name;
+            },
+        }).then(() => {
+            if (initStream && !joinRoomWithScreen) {
+                stopTracks(initStream);
+                hide(initVideo);
             }
-            setCookie(room_id + '_name', name, 30);
-            peer_name = name;
-        },
-    }).then(() => {
+            getPeerInfo();
+            joinRoom(peer_name, room_id);
+        });
+    }else{
+        if (!getCookie(room_id + '_name')) {
+            window.localStorage.peer_name = default_name;
+        }
+        setCookie(room_id + '_name', default_name, 30);
+        peer_name = default_name;
         if (initStream && !joinRoomWithScreen) {
             stopTracks(initStream);
             hide(initVideo);
         }
         getPeerInfo();
         joinRoom(peer_name, room_id);
-    });
+    }
 }
 
 function handleAudio(e) {
