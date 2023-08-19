@@ -533,11 +533,11 @@ function whoAreYou() {
             hide(initVideo);
         }
         getPeerInfo();
+        joinRoom(peer_name, room_id);
         setVideoButtonsDisabled(true);
         if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
         if (isHideMeActive) rc.handleHideMe();
         rc.produce(RoomClient.mediaType.video, videoSelect.value);
-        joinRoom(peer_name, room_id);
     }
 }
 
