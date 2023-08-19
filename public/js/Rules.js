@@ -22,6 +22,7 @@ const BUTTONS = {
         settingsButton: true,
         aboutButton: false, // Please keep me always visible, thank you!
         exitButton: true,
+        ChangeNameButton: true,
     },
     settings: {
         lockRoomButton: true,

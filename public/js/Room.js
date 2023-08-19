@@ -3,14 +3,8 @@
 if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.href.substr(4, location.href.length - 4);
 
 /**
- * MiroTalk SFU - Room component
  *
- * @link    GitHub: https://github.com/miroslavpejic85/mirotalksfu
- * @link    Official Live demo: https://sfu.mirotalk.com
- * @license For open source use: AGPLv3
- * @license For commercial or closed source, contact us at license.mirotalk@gmail.com or purchase directly via CodeCanyon
- * @license CodeCanyon: https://codecanyon.net/item/mirotalk-sfu-webrtc-realtime-video-conferences/40769970
- * @author  Miroslav Pejic - miroslav.pejic.85@gmail.com
+
  * @version 1.0.5
  *
  */
@@ -25,7 +19,7 @@ const socket = io({ transports: ['websocket'] });
 
 let survey = {
     enabled: true,
-    url: 'https://www.questionpro.com/t/AUs7VZq02P',
+    url: '',
 };
 
 const _PEER = {
@@ -137,6 +131,7 @@ function initClient() {
         setTippy('whiteboardButton', 'Toggle the whiteboard', 'right');
         setTippy('settingsButton', 'Toggle the settings', 'right');
         
+        setTippy('ChangeNameButton', 'Change Name', 'right');
         setTippy('exitButton', 'Leave room', 'right');
         setTippy('mySettingsCloseBtn', 'Close', 'right');
         setTippy('tabDevicesBtn', 'Devices', 'top');
@@ -746,6 +741,7 @@ function joinRoom(peer_name, room_id) {
 
 function roomIsReady() {
     setTheme('dark');
+    BUTTONS.main.ChangeNameButton && show(ChangeNameButton);
     BUTTONS.main.exitButton && show(exitButton);
     BUTTONS.main.shareButton && show(shareButton);
     BUTTONS.main.hideMeButton && show(hideMeButton);
@@ -896,6 +892,9 @@ function handleButtons() {
     };
     control.onmouseout = () => {
         isButtonsBarOver = false;
+    };
+    ChangeNameButton.onclick = () => {
+        rc.changeUserName();
     };
     exitButton.onclick = () => {
         rc.redirectPage();
