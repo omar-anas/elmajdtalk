@@ -260,8 +260,32 @@ async function initEnumerateDevices() {
 async function initEnumerateVideoDevices() {
     if (isEnumerateVideoDevices) return;
     // allow the video
+    const mediaConstraints = {
+        audio: true,
+        audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+        googEchoCancellation: true,
+        googAutoGainControl: true,
+        googNoiseSuppression: true,
+        googHighpassFilter: true,
+        googTypingNoiseDetection: true,
+        googNoiseReduction: true,
+        volume: 1.0,
+        },
+        video: true,
+        video: {
+        mandatory: {
+        minWidth: 300, // Provide your own width, height and frame rate here
+        minHeight: 300,
+        minFrameRate: 30,
+        },
+
+    }
+}// optiona
     await navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia(mediaConstraints)
         .then((stream) => {
             enumerateVideoDevices(stream);
             isVideoAllowed = false;
