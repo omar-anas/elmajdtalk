@@ -472,7 +472,7 @@ function whoAreYou() {
     document.body.style.background = 'var(--body-bg)';
 
     const imageLogo = document.createElement('img');
-    imageLogo.src = '.';
+    imageLogo.src = '../images/logo.png';
     imageLogo.width = 250;
     imageLogo.height = 250;
     document.body.appendChild(imageLogo);
