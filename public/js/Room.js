@@ -476,10 +476,26 @@ function whoAreYou() {
     imageLogo.width = 250;
     imageLogo.height = 250;
     document.body.appendChild(imageLogo);
-    this.style.position = 'absolute'
-    this.style.left ="50%";
-    this.style.top ="50%";
-    this.style.transform = "translate(-50%,-50%)"; 
+    imageLogo.onload = function(){
+        // var imageWidth = this.offsetWidth,
+        //     imageHeight = this.offsetHeight,
+        //     vpWidth = document.documentElement.clientWidth,
+        //     vpHeight = document.documentElement.clientHeight;
+      
+        this.style.position = 'absolute'
+        this.style.left ="50%";
+        this.style.top ="50%";
+        // this.style.bottom ="50%";
+        // this.style.right ="50%";
+        // this.style.margin = "auto"
+        this.style.transform = "translate(-50%,-50%)"; 
+        // this.style.left = (vpWidth - imageWidth)/2 + 'px';
+        // this.style.top = (vpHeight - imageHeight)/2 +window.pageYOffset + 'px';
+      }
+    // this.style.position = 'absolute'
+    // this.style.left ="50%";
+    // this.style.top ="50%";
+    // this.style.transform = "translate(-50%,-50%)"; 
 
     if (peer_name) {
         checkMedia();
