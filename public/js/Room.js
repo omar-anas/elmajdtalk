@@ -1330,7 +1330,6 @@ function processSegmentation(segmentation) {
         if(segmentation.data[pixelIndex] == 0) {
             imgData.data[i + 3] = 0;
         }
-        loaded =true;
     }
       //Draw the updated image on the canvas
       webcamCanvasCtx.putImageData(imgData, 0, 0);
