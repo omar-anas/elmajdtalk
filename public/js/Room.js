@@ -1306,7 +1306,7 @@ async function changeCamera(deviceId) {
     BodypixStream.addEventListener("loadeddata", segmentPersons);
 }
 function segmentPersons() {
-    tempCanvasCtx.drawImage(video, 0, 0);
+    tempCanvasCtx.drawImage(BodypixStream, 0, 0);
     if (previousSegmentationComplete) {
         previousSegmentationComplete = false;
         // Now classify the canvas image we have available.
