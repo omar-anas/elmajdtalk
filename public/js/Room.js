@@ -289,7 +289,7 @@ async function initEnumerateVideoDevices() {
     await navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
-            enumerateVideoDevices(stream);
+            //enumerateVideoDevices(stream);
             isVideoAllowed = false;
         })
         .catch(() => {
