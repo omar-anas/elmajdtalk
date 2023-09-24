@@ -1074,7 +1074,7 @@ function handleButtons() {
     };
     startVideoButton.onclick = () => {
         setVideoButtonsDisabled(true);
-        if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
+        //if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
         if (isHideMeActive) rc.handleHideMe();
         console.log("RoomClient.mediaType.video =============",RoomClient.mediaType);
         console.log("videoSelect.value ===========",videoSelect);
