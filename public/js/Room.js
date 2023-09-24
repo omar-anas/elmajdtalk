@@ -1283,7 +1283,7 @@ async function changeCamera(deviceId) {
         .getUserMedia(videoConstraints)
         .then((camStream) => {
             initVideo.className = 'mirror';
-            initVideo.srcObject = camStream;
+            //initVideo.srcObject = camStream;
             //BodypixStream.srcObject = camStream;
             initStream = camStream;
             //setResultStream()
