@@ -808,8 +808,10 @@ class RoomClient {
         let stream;
         try {
             if (init) {
+                console.log("========init stream is assigned")
                 stream = initStream;
             } else {
+                console.log("========only stream is assigned")
                 stream = screen
                     ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
                     : await navigator.mediaDevices.getUserMedia(mediaConstraints);
