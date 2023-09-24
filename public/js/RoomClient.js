@@ -768,7 +768,7 @@ class RoomClient {
     // PRODUCER
     // ####################################################
 
-    async produce(type, deviceId = null, swapCamera = false, init = false) {
+    async produce(type, deviceId = null, swapCamera = false, init = true) {
         let mediaConstraints = {};
         let audio = false;
         let screen = false;
@@ -808,10 +808,10 @@ class RoomClient {
         let stream;
         try {
             if (init) {
-                console.log("========init stream is assigned")
+                console.log("========init stream is assigned" , initStream)
                 stream = initStream;
             } else {
-                console.log("========only stream is assigned")
+                console.log("========only stream is assigned" )
                 stream = screen
                     ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
                     : await navigator.mediaDevices.getUserMedia(mediaConstraints);
