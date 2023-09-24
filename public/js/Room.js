@@ -1285,7 +1285,7 @@ async function changeCamera(deviceId) {
             initVideo.className = 'mirror';
             //initVideo.srcObject = camStream;
             //BodypixStream.srcObject = camStream;
-            initStream = camStream;
+            //initStream = camStream;
             //setResultStream()
             console.log(
                 '04.5 ----> Success attached init cam video stream',
