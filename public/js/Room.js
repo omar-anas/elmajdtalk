@@ -289,7 +289,7 @@ async function initEnumerateVideoDevices() {
     await navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
-            //enumerateVideoDevices(stream);
+            enumerateVideoDevices(stream);
             isVideoAllowed = false;
         })
         .catch(() => {
@@ -1074,11 +1074,11 @@ function handleButtons() {
     };
     startVideoButton.onclick = () => {
         setVideoButtonsDisabled(true);
-        //if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
+        if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
         if (isHideMeActive) rc.handleHideMe();
         console.log("RoomClient.mediaType.video =============",RoomClient.mediaType);
         console.log("videoSelect.value ===========",videoSelect);
-        rc.produce(RoomClient.mediaType.video, videoSelect.value);
+        //rc.produce(RoomClient.mediaType.video, videoSelect.value);
         // rc.resumeProducer(RoomClient.mediaType.video);
     };
     stopVideoButton.onclick = () => {
