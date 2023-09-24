@@ -1078,7 +1078,7 @@ function handleButtons() {
         if (isHideMeActive) rc.handleHideMe();
         console.log("RoomClient.mediaType.video =============",RoomClient.mediaType);
         console.log("videoSelect.value ===========",videoSelect);
-        //rc.produce(RoomClient.mediaType.video, videoSelect.value);
+        rc.produce(RoomClient.mediaType.video, videoSelect.value);
         // rc.resumeProducer(RoomClient.mediaType.video);
     };
     stopVideoButton.onclick = () => {
