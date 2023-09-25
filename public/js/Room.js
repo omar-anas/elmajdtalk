@@ -115,19 +115,19 @@ let initStream = null;
 // INIT ROOM
 // ####################################################
 
-let webcamCanvas = document.createElement("canvas");
-let webcamCanvasCtx = webcamCanvas.getContext('2d');
-let BodypixStream =document.getElementById("video-stream");
+// let webcamCanvas = document.createElement("canvas");
+// let webcamCanvasCtx = webcamCanvas.getContext('2d');
+// let BodypixStream =document.getElementById("video-stream");
 
-BodypixStream.width = initVideo.videoWidth;
-BodypixStream.height = initVideo.videoHeight;
-//In Memory Canvas used for model prediction
-webcamCanvas.hidden = true;
-BodypixStream.hidden = true
-var tempCanvas = document.createElement('canvas');
-var tempCanvasCtx = tempCanvas.getContext('2d');
+// BodypixStream.width = initVideo.videoWidth;
+// BodypixStream.height = initVideo.videoHeight;
+// //In Memory Canvas used for model prediction
+// webcamCanvas.hidden = true;
+// BodypixStream.hidden = true
+// var tempCanvas = document.createElement('canvas');
+// var tempCanvasCtx = tempCanvas.getContext('2d');
 
-let previousSegmentationComplete = true;
+// let previousSegmentationComplete = true;
 
 let segmentationProperties = {
     segmentationThreshold: 0.7,
