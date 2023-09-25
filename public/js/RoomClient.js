@@ -768,7 +768,7 @@ class RoomClient {
     // PRODUCER
     // ####################################################
 
-    async produce(type, deviceId = null, swapCamera = false, init = true) {
+    async produce(type, deviceId = null, swapCamera = false, init = false) {
         let mediaConstraints = {};
         let audio = false;
         let screen = false;
