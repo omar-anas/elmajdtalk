@@ -1341,7 +1341,11 @@ function processSegmentation(segmentation) {
 
 function setResultStream() {
     console.log('working setResultStream')
+<<<<<<< HEAD
     const stream = webcamCanvas.captureStream(60);
+=======
+    const stream = webcamCanvas.captureStream();
+>>>>>>> parent of 988cac1 (Revert "uncomment boodypix")
     initVideo.srcObject = stream;
     initStream =stream
     initVideo.play();
