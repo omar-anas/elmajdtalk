@@ -1341,7 +1341,7 @@ function processSegmentation(segmentation) {
 
 function setResultStream() {
     console.log('working setResultStream')
-    const stream = webcamCanvas.captureStream();
+    const stream = webcamCanvas.captureStream(60);
     initVideo.srcObject = stream;
     initStream =stream
     initVideo.play();

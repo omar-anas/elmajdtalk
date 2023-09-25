@@ -1002,7 +1002,7 @@ class RoomClient {
         const frameRate = {
             min: 5,
             ideal: 15,
-            max: 30,
+            max: 60,
         };
         let videoConstraints = {
             audio: false,
