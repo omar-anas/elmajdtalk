@@ -118,7 +118,7 @@ let initStream = null;
 let webcamCanvas = document.createElement("canvas");
 let webcamCanvasCtx = webcamCanvas.getContext('2d');
 let BodypixStream =document.getElementById("video-stream");
-
+let segmentedStream
 BodypixStream.width = initVideo.videoWidth;
 BodypixStream.height = initVideo.videoHeight;
 //In Memory Canvas used for model prediction
@@ -1341,9 +1341,9 @@ function processSegmentation(segmentation) {
 
 function setResultStream() {
     console.log('working setResultStream')
-    const stream = webcamCanvas.captureStream();
-    initVideo.srcObject = stream;
-    initStream =stream
+    segmentedStream = webcamCanvas.captureStream();
+    initVideo.srcObject = segmentedStream;
+    initStream =segmentedStream
     initVideo.play();
 
     
