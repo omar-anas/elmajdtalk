@@ -814,8 +814,8 @@ class RoomClient {
                 console.log("========only stream is assigned" )
                 stream = screen
                 ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
-                :initStream
-                //: await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                //:initStream
+                : await navigator.mediaDevices.getUserMedia(mediaConstraints);
             }
             
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
