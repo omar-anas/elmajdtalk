@@ -813,13 +813,17 @@ class RoomClient {
             } else {
                 console.log("========only stream is assigned" )
                 stream = screen
-                    ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
-                    //:initStream
-                     : await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
+                //:initStream
+                : await navigator.mediaDevices.getUserMedia(mediaConstraints);
             }
-
+            
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
-
+            
+            console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
+            console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
+            console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
+            console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
             const track = audio ? stream.getAudioTracks()[0] : stream.getVideoTracks()[0];
 
             console.log(`${type} settings ->`, track.getSettings());
