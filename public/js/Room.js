@@ -1343,7 +1343,7 @@ function setResultStream() {
     console.log('working setResultStream')
     const stream = webcamCanvas.captureStream();
     initVideo.srcObject = stream;
-    initStream =stream
+    initStream =stream.canvas
     initVideo.play();
 
     
