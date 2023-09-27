@@ -804,7 +804,7 @@ class RoomClient {
         if (videoPrivacyBtn) videoPrivacyBtn.style.display = screen ? 'none' : 'inline';
 
         console.log(`Media constraints ${type}:`, mediaConstraints);
-
+        
         let stream;
         try {
             if (init) {
@@ -818,12 +818,15 @@ class RoomClient {
                 //: await navigator.mediaDevices.getUserMedia(mediaConstraints);
             }
             
+            setTimeout(() => {
+                
+                console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
+                console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
+                console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
+                console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
+            }, 10000);
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
             
-            console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
-            console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
-            console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
-            console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
             const track = audio ? stream.getAudioTracks()[0] : stream.getVideoTracks()[0];
 
             console.log(`${type} settings ->`, track.getSettings());
