@@ -820,7 +820,8 @@ class RoomClient {
                 }else if(initStream===null){
                     stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
                 }else{
-                    stream = initStream;
+                    stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                    //stream = initStream;
                 }
                 
             }
