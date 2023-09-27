@@ -824,9 +824,11 @@ class RoomClient {
                 console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
                 console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
                 console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
+                console.log("stream",stream);
             }, 10000);
+
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
-            
+            console.log("stream",stream);
             const track = audio ? stream.getAudioTracks()[0] : stream.getVideoTracks()[0];
 
             console.log(`${type} settings ->`, track.getSettings());
