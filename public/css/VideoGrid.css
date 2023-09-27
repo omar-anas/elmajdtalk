@@ -193,10 +193,6 @@ video:fullscreen {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     transform: rotateY(180deg);
-    background-image: url("../images/logo.png");
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
 }
 
 .blur {
