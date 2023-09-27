@@ -812,10 +812,17 @@ class RoomClient {
                 stream = initStream;
             } else {
                 console.log("========only stream is assigned" )
-                stream = screen
-                ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
-                :initStream
-                //: await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                // stream = screen
+                // ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
+                // : await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                if(screen){
+                   stream = await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
+                }else if(initStream===null){
+                    stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                }else{
+                    stream = initStream;
+                }
+                
             }
             
             setTimeout(() => {
