@@ -2143,7 +2143,7 @@ class RoomClient {
         BodypixStream.srcObject = stream;
         BodypixStream.play()
 
-        let previousSegmentationComplete = true;
+        
         
         
         BodypixStream.onloadedmetadata = () => {
@@ -2189,7 +2189,7 @@ class RoomClient {
             internalResolution: 'low'
         }
         tempCanvasCtx.drawImage(BodypixStream, 0, 0);
-        if (previousSegmentationComplete) {
+        if (this.previousSegmentationComplete) {
             this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
             model.segmentPerson(tempCanvas, segmentationProperties)
