@@ -2192,6 +2192,8 @@ class RoomClient {
         if (this.previousSegmentationComplete) {
             this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
+            console.log("model",model);
+            console.log(model.segmentPerson);
             model.segmentPerson(tempCanvas, segmentationProperties)
             .then(segmentation => {
                 this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
@@ -2212,7 +2214,7 @@ class RoomClient {
             if(segmentation.data[pixelIndex] == 0) {
                 imgData.data[i + 3] = 0;
             }
-            loaded =true;
+            
         }
           //Draw the updated image on the canvas
           webcamCanvasCtx.putImageData(imgData, 0, 0);
