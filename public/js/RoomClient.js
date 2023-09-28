@@ -194,7 +194,7 @@ class RoomClient {
         this.receiveInProgress = false;
         this.fileSharingInput = '*';
         this.chunkSize = 1024 * 16; // 16kb/s
-
+        this.previousSegmentationComplete=true;
         // Encodings
         this.forceVP8 = false; // Force VP8 codec for webcam and screen sharing
         this.forceVP9 = false; // Force VP9 codec for webcam and screen sharing
@@ -2190,12 +2190,12 @@ class RoomClient {
         }
         tempCanvasCtx.drawImage(BodypixStream, 0, 0);
         if (previousSegmentationComplete) {
-            previousSegmentationComplete = false;
+            this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
             model.segmentPerson(tempCanvas, segmentationProperties)
             .then(segmentation => {
                 this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
-                previousSegmentationComplete = true;
+                this.previousSegmentationComplete = true;
                 });
             }
             //Call this function repeatedly to perform segmentation on all frames of the BodypixStream.
