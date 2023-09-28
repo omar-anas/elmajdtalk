@@ -2161,7 +2161,7 @@ class RoomClient {
         }, 1000);
         
     }
-    
+
     async attachMediaStream(elem, stream, type, who) {
         let track;
         switch (type) {
@@ -2169,7 +2169,7 @@ class RoomClient {
                 track = stream.getAudioTracks()[0];
                 break;
             case mediaType.video:
-                let newstream = await addVirtualBackGround(stream)
+                let newstream = await this.addVirtualBackGround(stream)
                 track = newstream.getVideoTracks()[0];
                 break;
 
