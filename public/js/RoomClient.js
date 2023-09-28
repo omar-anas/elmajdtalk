@@ -2192,7 +2192,7 @@ class RoomClient {
         if (this.previousSegmentationComplete) {
             this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
-            this.model.segmentPerson(tempCanvas, segmentationProperties)
+            model.segmentPerson(tempCanvas, segmentationProperties)
             .then(segmentation => {
                 this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
                 this.previousSegmentationComplete = true;
