@@ -2154,7 +2154,7 @@ class RoomClient {
             
             
         };
-        BodypixStream.addEventListener("loadeddata", segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
+        BodypixStream.addEventListener("loadeddata", this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
         setTimeout(() => {
             return webcamCanvas.captureStream();
             
@@ -2194,7 +2194,7 @@ class RoomClient {
             // Now classify the canvas image we have available.
             model.segmentPerson(tempCanvas, segmentationProperties)
             .then(segmentation => {
-                processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
+                this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
                 previousSegmentationComplete = true;
                 });
             }
