@@ -2201,7 +2201,7 @@ class RoomClient {
                 });
             }
             //Call this function repeatedly to perform segmentation on all frames of the BodypixStream.
-            window.requestAnimationFrame(segmentPersons);
+            window.requestAnimationFrame(this.segmentPersons);
         }
         
      processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx) {
