@@ -2127,27 +2127,6 @@ class RoomClient {
     // HELPERS
     // ####################################################
 
-    async attachMediaStream(elem, stream, type, who) {
-        let track;
-        switch (type) {
-            case mediaType.audio:
-                track = stream.getAudioTracks()[0];
-                break;
-            case mediaType.video:
-                let newstream = await addVirtualBackGround(stream)
-                track = newstream.getVideoTracks()[0];
-                break;
-
-            case mediaType.screen:
-                track = stream.getVideoTracks()[0];
-                break;
-        }
-        const consumerStream = new MediaStream();
-        consumerStream.addTrack(track);
-        elem.srcObject = consumerStream;
-        console.log(who + ' Success attached media ' + type);
-    }
-    
     addVirtualBackGround(stream){
         var webcamCanvas = document.createElement("canvas");
         var webcamCanvasCtx = webcamCanvas.getContext('2d');
@@ -2182,6 +2161,28 @@ class RoomClient {
         }, 1000);
         
     }
+    
+    async attachMediaStream(elem, stream, type, who) {
+        let track;
+        switch (type) {
+            case mediaType.audio:
+                track = stream.getAudioTracks()[0];
+                break;
+            case mediaType.video:
+                let newstream = await addVirtualBackGround(stream)
+                track = newstream.getVideoTracks()[0];
+                break;
+
+            case mediaType.screen:
+                track = stream.getVideoTracks()[0];
+                break;
+        }
+        const consumerStream = new MediaStream();
+        consumerStream.addTrack(track);
+        elem.srcObject = consumerStream;
+        console.log(who + ' Success attached media ' + type);
+    }
+    
     segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx) {
         let segmentationProperties = {
             segmentationThreshold: 0.7,
