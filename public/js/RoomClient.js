@@ -2188,7 +2188,7 @@ class RoomClient {
             segmentationThreshold: 0.7,
             internalResolution: 'low'
         }
-        tempCanvasCtx.drawImage(BodypixStream, 0, 0);
+        this.tempCanvasCtx.drawImage(BodypixStream, 0, 0);
         if (this.previousSegmentationComplete) {
             this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
