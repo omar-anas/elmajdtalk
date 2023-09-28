@@ -2192,7 +2192,7 @@ class RoomClient {
         if (this.previousSegmentationComplete) {
             this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
-            model.segmentPerson(tempCanvas, segmentationProperties)
+            this.model.segmentPerson(tempCanvas, segmentationProperties)
             .then(segmentation => {
                 this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
                 this.previousSegmentationComplete = true;
@@ -2202,7 +2202,7 @@ class RoomClient {
             window.requestAnimationFrame(segmentPersons);
         }
         
-     processSegmentation(segmentation ,webcamCanvas,webcamCanvasCtx) {
+     processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx) {
         var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
         //Loop through the pixels in the image
         for(let i = 0; i < imgData.data.length; i+=4) {
