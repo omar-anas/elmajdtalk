@@ -1286,7 +1286,7 @@ async function changeCamera(deviceId) {
             initVideo.srcObject = camStream;
             BodypixStream.srcObject = camStream;
             initStream = camStream;
-            //setResultStream()
+            setResultStream()
             console.log(
                 '04.5 ----> Success attached init cam video stream',
                 initStream.getVideoTracks()[0].getSettings(),
