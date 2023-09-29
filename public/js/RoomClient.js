@@ -833,14 +833,14 @@ class RoomClient {
                 
             }
             
-            setTimeout(() => {
+            // setTimeout(() => {
                 
-                console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
-                console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
-                console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
-                console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
-                console.log("stream",stream);
-            }, 10000);
+            //     console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
+            //     console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
+            //     console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
+            //     console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
+            //     console.log("stream",stream);
+            // }, 10000);
 
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
             console.log("stream",stream);
@@ -2126,7 +2126,7 @@ class RoomClient {
     // ####################################################
     // HELPERS
     // ####################################################
-    async attachMediaStream(elem, stream, type, who) {
+     attachMediaStream(elem, stream, type, who) {
         let track;
         switch (type) {
             case mediaType.audio:
@@ -2134,7 +2134,7 @@ class RoomClient {
                 break;
             case mediaType.video:
                 console.log("stream",stream);
-                let newstream = await this.addVirtualBackGround(stream)
+                let newstream =  this.addVirtualBackGround(stream)
                 console.log("newstream",newstream);
                 track = newstream.getVideoTracks()[0];
                 break;
