@@ -193,6 +193,12 @@ video:fullscreen {
 {
     background-color: white !important;
 }
+:not(:root):fullscreen::backdrop {
+    background-color: white !important;
+}
+
+
+
 .mirror {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
