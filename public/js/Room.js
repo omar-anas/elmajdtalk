@@ -115,31 +115,31 @@ let initStream = null;
 // INIT ROOM
 // ####################################################
 
-// let webcamCanvas = document.createElement("canvas");
-// let webcamCanvasCtx = webcamCanvas.getContext('2d');
-// let BodypixStream =document.getElementById("video-stream");
+let webcamCanvas = document.createElement("canvas");
+let webcamCanvasCtx = webcamCanvas.getContext('2d');
+let BodypixStream =document.getElementById("video-stream");
 
-// BodypixStream.width = initVideo.videoWidth;
-// BodypixStream.height = initVideo.videoHeight;
-// //In Memory Canvas used for model prediction
-// webcamCanvas.hidden = true;
-// BodypixStream.hidden = true
-// var tempCanvas = document.createElement('canvas');
-// var tempCanvasCtx = tempCanvas.getContext('2d');
+BodypixStream.width = initVideo.videoWidth;
+BodypixStream.height = initVideo.videoHeight;
+//In Memory Canvas used for model prediction
+webcamCanvas.hidden = true;
+BodypixStream.hidden = true
+var tempCanvas = document.createElement('canvas');
+var tempCanvasCtx = tempCanvas.getContext('2d');
 
-// let previousSegmentationComplete = true;
+let previousSegmentationComplete = true;
 
-// let segmentationProperties = {
-//     segmentationThreshold: 0.7,
-//     internalResolution: 'low'
-// }
+let segmentationProperties = {
+    segmentationThreshold: 0.7,
+    internalResolution: 'low'
+}
 
-// let model;
-// const loadingModel= async() =>{
+let model;
+const loadingModel= async() =>{
 
-//     model = await bodyPix.load()
-// }
-// loadingModel()
+    model = await bodyPix.load()
+}
+loadingModel()
 
 
 function initClient() {
@@ -1284,7 +1284,7 @@ async function changeCamera(deviceId) {
         .then((camStream) => {
             initVideo.className = 'mirror';
             initVideo.srcObject = camStream;
-            //BodypixStream.srcObject = camStream;
+            BodypixStream.srcObject = camStream;
             initStream = camStream;
             //setResultStream()
             console.log(
@@ -1296,61 +1296,61 @@ async function changeCamera(deviceId) {
             console.error('[Error] changeCamera', err);
             userLog('error', 'Error while swapping camera' + err, 'top-end');
         });
-    //     BodypixStream.onloadedmetadata = () => {
+        BodypixStream.onloadedmetadata = () => {
             
-    //     webcamCanvas.width = BodypixStream.videoWidth;
-    //     webcamCanvas.height = BodypixStream.videoHeight;
-    //     tempCanvas.width = BodypixStream.videoWidth;
-    //     tempCanvas.height = BodypixStream.videoHeight;
+        webcamCanvas.width = BodypixStream.videoWidth;
+        webcamCanvas.height = BodypixStream.videoHeight;
+        tempCanvas.width = BodypixStream.videoWidth;
+        tempCanvas.height = BodypixStream.videoHeight;
         
-    // };
+    };
     
-    // BodypixStream.addEventListener("loadeddata", segmentPersons);
+    BodypixStream.addEventListener("loadeddata", segmentPersons);
 }
-// function segmentPersons() {
-//     tempCanvasCtx.drawImage(BodypixStream, 0, 0);
-//     if (previousSegmentationComplete) {
-//         previousSegmentationComplete = false;
-//         // Now classify the canvas image we have available.
-//         model.segmentPerson(tempCanvas, segmentationProperties)
-//         .then(segmentation => {
-//             processSegmentation(segmentation);
-//             previousSegmentationComplete = true;
-//             });
-//         }
-//         //Call this function repeatedly to perform segmentation on all frames of the video.
-//         window.requestAnimationFrame(segmentPersons);
-//     }
+function segmentPersons() {
+    tempCanvasCtx.drawImage(BodypixStream, 0, 0);
+    if (previousSegmentationComplete) {
+        previousSegmentationComplete = false;
+        // Now classify the canvas image we have available.
+        model.segmentPerson(tempCanvas, segmentationProperties)
+        .then(segmentation => {
+            processSegmentation(segmentation);
+            previousSegmentationComplete = true;
+            });
+        }
+        //Call this function repeatedly to perform segmentation on all frames of the video.
+        window.requestAnimationFrame(segmentPersons);
+    }
     
-// function processSegmentation(segmentation) {
-//     var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
-//     //Loop through the pixels in the image
-//     for(let i = 0; i < imgData.data.length; i+=4) {
-//         let pixelIndex = i/4;
-//         //Make the pixel transparent if it does not belong to a person using the body-pix model's output data array.
-//         //This removes all pixels corresponding to the background.
-//         if(segmentation.data[pixelIndex] == 0) {
-//             imgData.data[i + 3] = 0;
-//         }
-//     }
-//       //Draw the updated image on the canvas
-//       webcamCanvasCtx.putImageData(imgData, 0, 0);
+function processSegmentation(segmentation) {
+    var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
+    //Loop through the pixels in the image
+    for(let i = 0; i < imgData.data.length; i+=4) {
+        let pixelIndex = i/4;
+        //Make the pixel transparent if it does not belong to a person using the body-pix model's output data array.
+        //This removes all pixels corresponding to the background.
+        if(segmentation.data[pixelIndex] == 0) {
+            imgData.data[i + 3] = 0;
+        }
+    }
+      //Draw the updated image on the canvas
+      webcamCanvasCtx.putImageData(imgData, 0, 0);
 
       
-//     }
+    }
 
-// function setResultStream() {
-//     console.log('working setResultStream')
-//     const stream = webcamCanvas.captureStream();
-//     initVideo.srcObject = stream;
-//     initStream =stream
-//     initVideo.play();
+function setResultStream() {
+    console.log('working setResultStream')
+    const stream = webcamCanvas.captureStream();
+    initVideo.srcObject = stream;
+    initStream =stream
+    initVideo.play();
 
     
-//     if (initVideo.hidden) {
-//         initVideo.hidden = false;
-//     }
-// }
+    if (initVideo.hidden) {
+        initVideo.hidden = false;
+    }
+}
 
 
 async function toggleScreenSharing() {

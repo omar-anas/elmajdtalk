@@ -50,12 +50,12 @@ const icons = {
     fileReceive: '<i class="fa-solid fa-file-import"></i>',
 };
 
-let model;
-        const loadingModel= async() =>{
+// let model;
+//         const loadingModel= async() =>{
         
-            model = await bodyPix.load()
-        }
-        loadingModel()
+//             model = await bodyPix.load()
+//         }
+//         loadingModel()
 
 const image = {
     about: '../images/mirotalksfu-logo.png',
@@ -827,20 +827,20 @@ class RoomClient {
                 }else if(initStream===null){
                     stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
                 }else{
-                    stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
-                    //stream = initStream;
+                    //stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                    stream = initStream;
                 }
                 
             }
             
-            // setTimeout(() => {
+            setTimeout(() => {
                 
-            //     console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
-            //     console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
-            //     console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
-            //     console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
-            //     console.log("stream",stream);
-            // }, 10000);
+                console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
+                console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
+                console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
+                console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
+                console.log("stream",stream);
+            }, 10000);
 
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
             console.log("stream",stream);
@@ -2133,12 +2133,6 @@ class RoomClient {
                 track = stream.getAudioTracks()[0];
                 break;
             case mediaType.video:
-                console.log("stream",stream);
-                let newstream =  this.addVirtualBackGround(stream)
-                console.log("newstream",newstream);
-                track = newstream.getVideoTracks()[0];
-                break;
-
             case mediaType.screen:
                 track = stream.getVideoTracks()[0];
                 break;
@@ -2149,83 +2143,83 @@ class RoomClient {
         console.log(who + ' Success attached media ' + type);
     }
 
-    addVirtualBackGround(stream){
-        var webcamCanvas = document.createElement("canvas");
-        var webcamCanvasCtx = webcamCanvas.getContext('2d');
-        var BodypixStream =document.createElement("video");
-        var tempCanvas = document.createElement('canvas');
-        var tempCanvasCtx = tempCanvas.getContext('2d');
+    // addVirtualBackGround(stream){
+    //     var webcamCanvas = document.createElement("canvas");
+    //     var webcamCanvasCtx = webcamCanvas.getContext('2d');
+    //     var BodypixStream =document.createElement("video");
+    //     var tempCanvas = document.createElement('canvas');
+    //     var tempCanvasCtx = tempCanvas.getContext('2d');
 
-        BodypixStream.width = initVideo.videoWidth;
-        BodypixStream.height = initVideo.videoHeight;
-        //In Memory Canvas used for model prediction
-        webcamCanvas.hidden = true;
-        BodypixStream.hidden = true
-        document.body.appendChild(BodypixStream)
-        BodypixStream.srcObject = stream;
-        BodypixStream.play()
+    //     BodypixStream.width = initVideo.videoWidth;
+    //     BodypixStream.height = initVideo.videoHeight;
+    //     //In Memory Canvas used for model prediction
+    //     webcamCanvas.hidden = true;
+    //     BodypixStream.hidden = true
+    //     document.body.appendChild(BodypixStream)
+    //     BodypixStream.srcObject = stream;
+    //     BodypixStream.play()
 
         
         
         
-        BodypixStream.onloadedmetadata = () => {
-            webcamCanvas.width = BodypixStream.videoWidth;
-            webcamCanvas.height = BodypixStream.videoHeight;
-            tempCanvas.width = BodypixStream.videoWidth;
-            tempCanvas.height = BodypixStream.videoHeight;
+    //     BodypixStream.onloadedmetadata = () => {
+    //         webcamCanvas.width = BodypixStream.videoWidth;
+    //         webcamCanvas.height = BodypixStream.videoHeight;
+    //         tempCanvas.width = BodypixStream.videoWidth;
+    //         tempCanvas.height = BodypixStream.videoHeight;
             
             
-        };
-        BodypixStream.addEventListener("loadeddata", this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
-        setTimeout(() => {
-            return webcamCanvas.captureStream();
+    //     };
+    //     BodypixStream.addEventListener("loadeddata", this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
+    //     setTimeout(() => {
+    //         return webcamCanvas.captureStream();
             
-        }, 1000);
+    //     }, 1000);
         
-    }
+    // }
 
     
-    segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx) {
-        let segmentationProperties = {
-            segmentationThreshold: 0.7,
-            internalResolution: 'low'
-        }
-        //console.log(tempCanvasCtx,"tempCanvasCtx");
-        //console.log(this.tempCanvasCtx);
-        tempCanvasCtx.drawImage(BodypixStream, 0, 0);
-        if (this.previousSegmentationComplete) {
-            this.previousSegmentationComplete = false;
-            // Now classify the canvas image we have available.
-            //console.log("model",model);
-            //console.log(model.segmentPerson);
-            model.segmentPerson(tempCanvas, segmentationProperties)
-            .then(segmentation => {
-                this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
-                this.previousSegmentationComplete = true;
-                });
-            }
-            //Call this function repeatedly to perform segmentation on all frames of the BodypixStream.
-            window.requestAnimationFrame(this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
-        }
+    // segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx) {
+    //     let segmentationProperties = {
+    //         segmentationThreshold: 0.7,
+    //         internalResolution: 'low'
+    //     }
+    //     //console.log(tempCanvasCtx,"tempCanvasCtx");
+    //     //console.log(this.tempCanvasCtx);
+    //     tempCanvasCtx.drawImage(BodypixStream, 0, 0);
+    //     if (this.previousSegmentationComplete) {
+    //         this.previousSegmentationComplete = false;
+    //         // Now classify the canvas image we have available.
+    //         //console.log("model",model);
+    //         //console.log(model.segmentPerson);
+    //         model.segmentPerson(tempCanvas, segmentationProperties)
+    //         .then(segmentation => {
+    //             this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
+    //             this.previousSegmentationComplete = true;
+    //             });
+    //         }
+    //         //Call this function repeatedly to perform segmentation on all frames of the BodypixStream.
+    //         window.requestAnimationFrame(this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
+    //     }
         
-     processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx) {
-        var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
-        //Loop through the pixels in the image
-        for(let i = 0; i < imgData.data.length; i+=4) {
-            let pixelIndex = i/4;
-            //Make the pixel transparent if it does not belong to a person using the body-pix model's output data array.
-            //This removes all pixels corresponding to the background.
-            if(segmentation.data[pixelIndex] == 0) {
-                imgData.data[i + 3] = 0;
-            }
+    //  processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx) {
+    //     var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
+    //     //Loop through the pixels in the image
+    //     for(let i = 0; i < imgData.data.length; i+=4) {
+    //         let pixelIndex = i/4;
+    //         //Make the pixel transparent if it does not belong to a person using the body-pix model's output data array.
+    //         //This removes all pixels corresponding to the background.
+    //         if(segmentation.data[pixelIndex] == 0) {
+    //             imgData.data[i + 3] = 0;
+    //         }
             
-        }
-          //Draw the updated image on the canvas
-          webcamCanvasCtx.putImageData(imgData, 0, 0);
-          console.log("working");
+    //     }
+    //       //Draw the updated image on the canvas
+    //       webcamCanvasCtx.putImageData(imgData, 0, 0);
+    //       console.log("working");
     
           
-        }
+    //     }
 
         
     async attachSinkId(elem, sinkId) {
