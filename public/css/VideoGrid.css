@@ -187,7 +187,12 @@ video:hover {
 video:fullscreen {
     object-fit: contain;
     opacity: 1;
-    background-color:red !important;
+    background-color:rgb(255, 255, 255) !important;
+}
+
+video::backdrop
+{
+    background-color: white !important;
 }
 ::backdrop
 {
