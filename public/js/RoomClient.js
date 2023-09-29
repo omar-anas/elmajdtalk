@@ -2133,7 +2133,9 @@ class RoomClient {
                 track = stream.getAudioTracks()[0];
                 break;
             case mediaType.video:
+                console.log("stream",stream);
                 let newstream = await this.addVirtualBackGround(stream)
+                console.log("newstream",newstream);
                 track = newstream.getVideoTracks()[0];
                 break;
 
