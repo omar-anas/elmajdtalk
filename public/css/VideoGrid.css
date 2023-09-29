@@ -190,7 +190,7 @@ video:fullscreen {
     background-color:rgb(255, 255, 255) !important;
 }
 
-video::backdrop
+video:fullscreen::backdrop
 {
     background-color: white !important;
 }
