@@ -1346,6 +1346,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !isScreen && elem.setAttribute('name', this.peer_id);
                 elem.setAttribute('playsinline', true);
+                elem.style.background = "url('./images/logo.png') no-repeat";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.muted = true;
@@ -1712,6 +1713,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !remoteIsScreen && elem.setAttribute('name', remotePeerId);
                 elem.setAttribute('playsinline', true);
+                elem.style.background = "url('./images/logo.png') no-repeat";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.className = '';
@@ -2138,7 +2140,7 @@ class RoomClient {
                 break;
         }
         const consumerStream = new MediaStream();
-        consumerStream.addTrack(track);
+        consumerStream.addTrack(track); 
         elem.srcObject = consumerStream;
         console.log(who + ' Success attached media ' + type);
     }
