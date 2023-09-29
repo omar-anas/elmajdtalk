@@ -1346,7 +1346,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !isScreen && elem.setAttribute('name', this.peer_id);
                 elem.setAttribute('playsinline', true);
-                elem.style.background = "url('./images/logo.png') no-repeat";
+                elem.style.background = "url('../images/logo.png') no-repeat";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.muted = true;
@@ -1713,7 +1713,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !remoteIsScreen && elem.setAttribute('name', remotePeerId);
                 elem.setAttribute('playsinline', true);
-                elem.style.background = "url('./images/logo.png') no-repeat";
+                elem.style.background = "url('../images/logo.png') no-repeat";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.className = '';
