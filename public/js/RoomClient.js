@@ -2188,14 +2188,14 @@ class RoomClient {
             segmentationThreshold: 0.7,
             internalResolution: 'low'
         }
-        console.log(tempCanvasCtx,"tempCanvasCtx");
-        console.log(this.tempCanvasCtx);
+        //console.log(tempCanvasCtx,"tempCanvasCtx");
+        //console.log(this.tempCanvasCtx);
         tempCanvasCtx.drawImage(BodypixStream, 0, 0);
         if (this.previousSegmentationComplete) {
             this.previousSegmentationComplete = false;
             // Now classify the canvas image we have available.
-            console.log("model",model);
-            console.log(model.segmentPerson);
+            //console.log("model",model);
+            //console.log(model.segmentPerson);
             model.segmentPerson(tempCanvas, segmentationProperties)
             .then(segmentation => {
                 this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
