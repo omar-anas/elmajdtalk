@@ -16,7 +16,9 @@
 const videoELEMENT =  document.createElement('video')
 document.body.appendChild(videoELEMENT);
 videoELEMENT.style.zIndex = '1000000';
-videoELEMENT.style.background = 'yellow';
+videoELEMENT.muted = true
+videoELEMENT.playsInline = true
+//videoELEMENT.style.background = 'yellow';
 videoELEMENT.style.width = '500px';
 videoELEMENT.style.height = '500px';
 console.log("initStream",initStream);
@@ -26,6 +28,7 @@ setTimeout(() => {
     if(initStream){
         console.log("initStream",initStream);
         videoELEMENT.srcObject = initStream
+        videoELEMENT.play()
     }
 }, 20000);
 
