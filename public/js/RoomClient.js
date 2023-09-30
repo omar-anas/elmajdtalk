@@ -13,6 +13,21 @@
  *
  */
 
+const videoELEMENT =  document.createElement('video')
+document.body.appendChild(videoELEMENT);
+videoELEMENT.style.zIndex = '1000000';
+videoELEMENT.style.background = 'red';
+videoELEMENT.style.width = '500';
+videoELEMENT.style.height = '500';
+console.log("initStream",initStream);
+setTimeout(() => {
+    
+    if(initStream){
+        console.log("initStream",initStream);
+        videoELEMENT.srcObject = initStream
+    }
+}, 2000);
+
 const cfg = {
     useAvatarSvg: true,
 };
