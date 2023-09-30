@@ -122,8 +122,8 @@ let BodypixStream =document.getElementById("video-stream");
 BodypixStream.width = initVideo.videoWidth;
 BodypixStream.height = initVideo.videoHeight;
 //In Memory Canvas used for model prediction
-webcamCanvas.hidden = true;
-BodypixStream.hidden = true
+webcamCanvas.hidden = false;
+BodypixStream.hidden = false
 var tempCanvas = document.createElement('canvas');
 var tempCanvasCtx = tempCanvas.getContext('2d');
 
