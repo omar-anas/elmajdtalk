@@ -1365,7 +1365,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !isScreen && elem.setAttribute('name', this.peer_id);
                 elem.setAttribute('playsinline', true);
-                elem.style.background = "red";
+                elem.style.backgroundColor = "red";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.muted = true;
@@ -1419,12 +1419,12 @@ class RoomClient {
                 this.videoMediaContainer.appendChild(d);
                 this.attachMediaStream(elem, stream, type, 'Producer');
                 this.myVideoEl = elem;
-                //this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
+                this.isVideoFullScreenSupported && this.handleFS(elem.id, fs.id);
                 this.handleDD(elem.id, this.peer_id, true);
                 this.handleTS(elem.id, ts.id);
                 this.handlePN(elem.id, pn.id, d.id, isScreen);
                 this.handleZV(elem.id);
-                //if (!isScreen) this.handleVP(elem.id, vp.id);
+                if (!isScreen) this.handleVP(elem.id, vp.id);
                 this.popupPeerInfo(p.id, this.peer_info);
                 this.checkPeerInfoStatus(this.peer_info);
                 if (isScreen) pn.click();

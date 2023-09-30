@@ -40,7 +40,7 @@
     align-self: center;
     overflow: hidden;
     display: inline-block;
-    background: blue;
+    background: transparent;
     border-radius: 10px;
     border: var(--border);
     box-shadow: var(--box-shadow);
