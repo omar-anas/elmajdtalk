@@ -13,24 +13,24 @@
  *
  */
 
-const videoELEMENT =  document.createElement('video')
-document.body.appendChild(videoELEMENT);
-videoELEMENT.style.zIndex = '1000000';
-videoELEMENT.muted = true
-videoELEMENT.playsInline = true
-videoELEMENT.style.background = 'red';
-videoELEMENT.style.width = '500px';
-videoELEMENT.style.height = '500px';
-console.log("initStream",initStream);
+// const videoELEMENT =  document.createElement('video')
+// document.body.appendChild(videoELEMENT);
+// videoELEMENT.style.zIndex = '1000000';
+// videoELEMENT.muted = true
+// videoELEMENT.playsInline = true
+// videoELEMENT.style.background = 'red';
+// videoELEMENT.style.width = '500px';
+// videoELEMENT.style.height = '500px';
+// console.log("initStream",initStream);
 
-setTimeout(() => {
+// setTimeout(() => {
     
-    if(initStream){
-        console.log("initStream",initStream);
-        videoELEMENT.srcObject = initStream
-        videoELEMENT.play()
-    }
-}, 5000);
+//     if(initStream){
+//         console.log("initStream",initStream);
+//         videoELEMENT.srcObject = initStream
+//         videoELEMENT.play()
+//     }
+// }, 5000);
 
 const cfg = {
     useAvatarSvg: true,
