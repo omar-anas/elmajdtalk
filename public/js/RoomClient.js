@@ -18,7 +18,7 @@ document.body.appendChild(videoELEMENT);
 videoELEMENT.style.zIndex = '1000000';
 videoELEMENT.muted = true
 videoELEMENT.playsInline = true
-//videoELEMENT.style.background = 'yellow';
+videoELEMENT.style.background = 'red';
 videoELEMENT.style.width = '500px';
 videoELEMENT.style.height = '500px';
 console.log("initStream",initStream);
