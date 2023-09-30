@@ -32,7 +32,7 @@
 }
 
 :root {
-    --body-bg: radial-gradient(#6c1414, #eb1010);
+    --body-bg: radial-gradient(#393939, #000000);
     --border: 1px solid rgb(255 255 255 / 32%);
     --border-radius: 1rem;
     --msger-top: 50%;
@@ -43,7 +43,7 @@
     --msger-bg: radial-gradient(#393939, #000000);
     --wb-width: 800px;
     --wb-height: 600px;
-    --wb-bg: radial-gradient(#393939, #a61616);
+    --wb-bg: radial-gradient(#393939, #000000);
     --left-msg-bg: #252d31;
     --right-msg-bg: #056162;
     --private-msg-bg: #6b1226;
@@ -139,7 +139,7 @@ body {
     width: 100%;
     margin-top: 15px;
     padding: 10px;
-    background: #3d0000;
+    background: #2c2c2c;
     color: white;
     border: var(--border);
     border-radius: 5px;
