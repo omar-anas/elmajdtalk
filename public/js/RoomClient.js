@@ -30,7 +30,7 @@ setTimeout(() => {
         videoELEMENT.srcObject = initStream
         videoELEMENT.play()
     }
-}, 20000);
+}, 3000);
 
 const cfg = {
     useAvatarSvg: true,
