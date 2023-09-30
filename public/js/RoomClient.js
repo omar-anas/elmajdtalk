@@ -2630,8 +2630,7 @@ class RoomClient {
     }
 
     handleVideoControls(value) {
-        //isVideoControlsOn = value == 'On' ? true : false;
-        isVideoControlsOn = value == 'On' ? false : false;
+        isVideoControlsOn = value == 'On' ? true : false;
         let cameras = this.getEcN('Camera');
         for (let i = 0; i < cameras.length; i++) {
             let cameraId = cameras[i].id.replace('__video', '');
