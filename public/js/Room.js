@@ -3,13 +3,8 @@
 if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.href.substr(4, location.href.length - 4);
 
 /**
-
  *
- * @link   
- * @link  
- * @license For 
- * @license For 
- * @license CodeCanyon: 
+
  * @version 1.0.5
  *
  */
@@ -24,7 +19,7 @@ const socket = io({ transports: ['websocket'] });
 
 let survey = {
     enabled: true,
-    url: 'https://www.questionpro.com/t/AUs7VZq02P',
+    url: '',
 };
 
 const _PEER = {
@@ -120,77 +115,106 @@ let initStream = null;
 // INIT ROOM
 // ####################################################
 
+let webcamCanvas = document.createElement("canvas");
+let webcamCanvasCtx = webcamCanvas.getContext('2d');
+let BodypixStream =document.getElementById("video-stream");
+
+webcamCanvas.style.backgroundColor= 'red';
+BodypixStream.style.backgroundColor= 'red';
+BodypixStream.width = initVideo.videoWidth;
+BodypixStream.height = initVideo.videoHeight;
+//In Memory Canvas used for model prediction
+webcamCanvas.hidden = false;
+BodypixStream.hidden = false
+var tempCanvas = document.createElement('canvas');
+var tempCanvasCtx = tempCanvas.getContext('2d');
+
+let previousSegmentationComplete = true;
+
+let segmentationProperties = {
+    segmentationThreshold: 0.7,
+    internalResolution: 'low'
+}
+
+let model;
+const loadingModel= async() =>{
+
+    model = await bodyPix.load()
+}
+loadingModel()
+
+
 function initClient() {
-    
-        setTippy('shareButton', 'Share room', 'right');
-        setTippy('hideMeButton', 'Toggle hide me', 'right');
-        setTippy('startAudioButton', 'Start the audio', 'right');
-        setTippy('stopAudioButton', 'Stop the audio', 'right');
-        setTippy('startVideoButton', 'Start the video', 'right');
-        setTippy('stopVideoButton', 'Stop the video', 'right');
-        setTippy('startScreenButton', 'Start screen share', 'right');
-        setTippy('stopScreenButton', 'Stop screen share', 'right');
-        setTippy('swapCameraButton', 'Swap the camera', 'right');
-        setTippy('chatButton', 'Toggle the chat', 'right');
-        setTippy('participantsButton', 'Toggle participants', 'right');
-        setTippy('whiteboardButton', 'Toggle the whiteboard', 'right');
-        setTippy('settingsButton', 'Toggle the settings', 'right');
-        setTippy('aboutButton', 'About this project', 'right');
-        setTippy('exitButton', 'Leave room', 'right');
-        setTippy('mySettingsCloseBtn', 'Close', 'right');
-        setTippy('tabDevicesBtn', 'Devices', 'top');
-        setTippy('tabRecordingBtn', 'Recording', 'top');
-        setTippy('tabRoomBtn', 'Room', 'top');
-        setTippy('tabVideoShareBtn', 'Video share', 'top');
-        setTippy('tabAspectBtn', 'Aspect', 'top');
-        setTippy('tabStylingBtn', 'Styling', 'top');
-        setTippy('tabLanguagesBtn', 'Languages', 'top');
-        setTippy('lobbyAcceptAllBtn', 'Accept', 'top');
-        setTippy('lobbyRejectAllBtn', 'Reject', 'top');
-        setTippy(
-            'switchLobby',
-            'Lobby mode lets you protect your meeting by only allowing people to enter after a formal approval by a moderator',
-            'right',
-        );
-        setTippy('switchPitchBar', 'Toggle audio pitch bar', 'right');
-        setTippy('switchSounds', 'Toggle the sounds notifications', 'right');
-        setTippy('whiteboardGhostButton', 'Toggle transparent background', 'bottom');
-        setTippy('wbBackgroundColorEl', 'Background color', 'bottom');
-        setTippy('wbDrawingColorEl', 'Drawing color', 'bottom');
-        setTippy('whiteboardPencilBtn', 'Drawing mode', 'bottom');
-        setTippy('whiteboardObjectBtn', 'Object mode', 'bottom');
-        setTippy('whiteboardUndoBtn', 'Undo', 'bottom');
-        setTippy('whiteboardRedoBtn', 'Redo', 'bottom');
-        setTippy('whiteboardImgFileBtn', 'Add image file', 'bottom');
-        setTippy('whiteboardImgUrlBtn', 'Add image url', 'bottom');
-        setTippy('whiteboardTextBtn', 'Add text', 'bottom');
-        setTippy('whiteboardLineBtn', 'Add line', 'bottom');
-        setTippy('whiteboardRectBtn', 'Add rectangle', 'bottom');
-        setTippy('whiteboardTriangleBtn', 'Add triangle', 'bottom');
-        setTippy('whiteboardCircleBtn', 'Add circle', 'bottom');
-        setTippy('whiteboardSaveBtn', 'Save', 'bottom');
-        setTippy('whiteboardEraserBtn', 'Eraser', 'bottom');
-        setTippy('whiteboardCleanBtn', 'Clean', 'bottom');
-        setTippy('whiteboardCloseBtn', 'Close', 'right');
-        setTippy('chatCleanTextButton', 'Clean', 'top');
-        setTippy('chatPasteButton', 'Paste', 'top');
-        setTippy('chatSendButton', 'Send', 'top');
-        setTippy('showChatOnMsg', "Toggle show me when I'm receive a new message", 'top');
-        setTippy('chatSpeechStartButton', 'Start speech recognition', 'top');
-        setTippy('chatSpeechStopButton', 'Stop speech recognition', 'top');
-        setTippy('chatEmojiButton', 'Emoji', 'top');
-        setTippy('chatMarkdownButton', 'Markdown', 'top');
-        setTippy('chatGPTButton', 'ChatGPT', 'top');
-        setTippy('chatShareFileButton', 'Share file', 'top');
-        setTippy('chatCleanButton', 'Clean', 'bottom');
-        setTippy('chatSaveButton', 'Save', 'bottom');
-        setTippy('chatGhostButton', 'Toggle transparent background', 'bottom');
-        setTippy('chatCloseButton', 'Close', 'right');
-        setTippy('chatMaxButton', 'Maximize', 'right');
-        setTippy('chatMinButton', 'Minimize', 'right');
-        setTippy('participantsCloseBtn', 'Close', 'left');
-        setTippy('participantsSaveBtn', 'Save participants info', 'right');
-    
+    setTippy('shareButton', 'Share room', 'right');
+    setTippy('hideMeButton', 'Toggle hide me', 'right');
+    setTippy('startAudioButton', 'Start the audio', 'right');
+    setTippy('stopAudioButton', 'Stop the audio', 'right');
+    setTippy('startVideoButton', 'Start the video', 'right');
+    setTippy('stopVideoButton', 'Stop the video', 'right');
+    setTippy('startScreenButton', 'Start screen share', 'right');
+    setTippy('stopScreenButton', 'Stop screen share', 'right');
+    setTippy('swapCameraButton', 'Swap the camera', 'right');
+    setTippy('chatButton', 'Toggle the chat', 'right');
+    setTippy('participantsButton', 'Toggle participants', 'right');
+    setTippy('whiteboardButton', 'Toggle the whiteboard', 'right');
+    setTippy('settingsButton', 'Toggle the settings', 'right');
+
+    setTippy('ChangeNameButton', 'Change Name', 'right');
+    setTippy('exitButton', 'Leave room', 'right');
+    setTippy('mySettingsCloseBtn', 'Close', 'right');
+    setTippy('tabDevicesBtn', 'Devices', 'top');
+    setTippy('tabRecordingBtn', 'Recording', 'top');
+    setTippy('tabRoomBtn', 'Room', 'top');
+    setTippy('tabVideoShareBtn', 'Video share', 'top');
+    setTippy('tabAspectBtn', 'Aspect', 'top');
+    setTippy('tabStylingBtn', 'Styling', 'top');
+    setTippy('tabLanguagesBtn', 'Languages', 'top');
+    setTippy('lobbyAcceptAllBtn', 'Accept', 'top');
+    setTippy('lobbyRejectAllBtn', 'Reject', 'top');
+    setTippy(
+        'switchLobby',
+        'Lobby mode lets you protect your meeting by only allowing people to enter after a formal approval by a moderator',
+        'right',
+    );
+    setTippy('switchPitchBar', 'Toggle audio pitch bar', 'right');
+    setTippy('switchSounds', 'Toggle the sounds notifications', 'right');
+    setTippy('whiteboardGhostButton', 'Toggle transparent background', 'bottom');
+    setTippy('wbBackgroundColorEl', 'Background color', 'bottom');
+    setTippy('wbDrawingColorEl', 'Drawing color', 'bottom');
+    setTippy('whiteboardPencilBtn', 'Drawing mode', 'bottom');
+    setTippy('whiteboardObjectBtn', 'Object mode', 'bottom');
+    setTippy('whiteboardUndoBtn', 'Undo', 'bottom');
+    setTippy('whiteboardRedoBtn', 'Redo', 'bottom');
+    setTippy('whiteboardImgFileBtn', 'Add image file', 'bottom');
+    setTippy('whiteboardImgUrlBtn', 'Add image url', 'bottom');
+    setTippy('whiteboardTextBtn', 'Add text', 'bottom');
+    setTippy('whiteboardLineBtn', 'Add line', 'bottom');
+    setTippy('whiteboardRectBtn', 'Add rectangle', 'bottom');
+    setTippy('whiteboardTriangleBtn', 'Add triangle', 'bottom');
+    setTippy('whiteboardCircleBtn', 'Add circle', 'bottom');
+    setTippy('whiteboardSaveBtn', 'Save', 'bottom');
+    setTippy('whiteboardEraserBtn', 'Eraser', 'bottom');
+    setTippy('whiteboardCleanBtn', 'Clean', 'bottom');
+    setTippy('whiteboardCloseBtn', 'Close', 'right');
+    setTippy('chatCleanTextButton', 'Clean', 'top');
+    setTippy('chatPasteButton', 'Paste', 'top');
+    setTippy('chatSendButton', 'Send', 'top');
+    setTippy('showChatOnMsg', "Toggle show me when I'm receive a new message", 'top');
+    setTippy('chatSpeechStartButton', 'Start speech recognition', 'top');
+    setTippy('chatSpeechStopButton', 'Stop speech recognition', 'top');
+    setTippy('chatEmojiButton', 'Emoji', 'top');
+    setTippy('chatMarkdownButton', 'Markdown', 'top');
+    setTippy('chatGPTButton', 'ChatGPT', 'top');
+    setTippy('chatShareFileButton', 'Share file', 'top');
+    setTippy('chatCleanButton', 'Clean', 'bottom');
+    setTippy('chatSaveButton', 'Save', 'bottom');
+    setTippy('chatGhostButton', 'Toggle transparent background', 'bottom');
+    setTippy('chatCloseButton', 'Close', 'right');
+    setTippy('chatMaxButton', 'Maximize', 'right');
+    setTippy('chatMinButton', 'Minimize', 'right');
+    setTippy('participantsCloseBtn', 'Close', 'left');
+    setTippy('participantsSaveBtn', 'Save participants info', 'right');
+
     setupWhiteboard();
     initEnumerateDevices();
 }
@@ -268,7 +292,7 @@ async function initEnumerateVideoDevices() {
         .getUserMedia({ video: true })
         .then((stream) => {
             enumerateVideoDevices(stream);
-            isVideoAllowed = true;
+            isVideoAllowed = false;
         })
         .catch(() => {
             isVideoAllowed = false;
@@ -476,6 +500,32 @@ function whoAreYou() {
     hide(loadingDiv);
     document.body.style.background = 'var(--body-bg)';
 
+    const imageLogo = document.createElement('img');
+    imageLogo.src = '../images/logo.png';
+    imageLogo.width = 250;
+    imageLogo.height = 250;
+    document.body.appendChild(imageLogo);
+    imageLogo.onload = function(){
+        // var imageWidth = this.offsetWidth,
+        //     imageHeight = this.offsetHeight,
+        //     vpWidth = document.documentElement.clientWidth,
+        //     vpHeight = document.documentElement.clientHeight;
+      
+        this.style.position = 'absolute'
+        this.style.left ="50%";
+        this.style.top ="50%";
+        // this.style.bottom ="50%";
+        // this.style.right ="50%";
+        // this.style.margin = "auto"
+        this.style.transform = "translate(-50%,-50%)"; 
+        // this.style.left = (vpWidth - imageWidth)/2 + 'px';
+        // this.style.top = (vpHeight - imageHeight)/2 +window.pageYOffset + 'px';
+      }
+    // this.style.position = 'absolute'
+    // this.style.left ="50%";
+    // this.style.top ="50%";
+    // this.style.transform = "translate(-50%,-50%)"; 
+
     if (peer_name) {
         checkMedia();
         getPeerInfo();
@@ -489,42 +539,56 @@ function whoAreYou() {
     }
 
     const initUser = document.getElementById('initUser');
-    initUser.classList.toggle('hidden');
+    if (!default_name) {
+        initUser.classList.toggle('hidden');
 
-    Swal.fire({
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        background: swalBackground,
-        title: 'Elmajd academy',
-        input: 'text',
-        inputPlaceholder: 'Enter your name',
-        inputValue: default_name,
-        html: initUser, // Inject HTML
-        confirmButtonText: `Join meeting`,
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-        },
-        inputValidator: (name) => {
-            if (!name) return 'Please enter your name';
-            name = filterXSS(name);
-            if (isHtml(name)) return 'Invalid name!';
-            if (!getCookie(room_id + '_name')) {
-                window.localStorage.peer_name = name;
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            background: swalBackground,
+            title: 'Elmajd Academy',
+            input: 'text',
+            inputPlaceholder: 'Enter your name',
+            inputValue: default_name,
+            html: initUser, // Inject HTML
+            confirmButtonText: `Join meeting`,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+            },
+            inputValidator: (name) => {
+                if (!name) return 'Please enter your name';
+                name = filterXSS(name);
+                if (isHtml(name)) return 'Invalid name!';
+                if (!getCookie(room_id + '_name')) {
+                    window.localStorage.peer_name = name;
+                }
+                // setCookie(room_id + '_name', name, 30);
+                peer_name = name;
+            },
+        }).then(() => {
+            if (initStream && !joinRoomWithScreen) {
+                stopTracks(initStream);
+                hide(initVideo);
             }
-            setCookie(room_id + '_name', name, 30);
-            peer_name = name;
-        },
-    }).then(() => {
+            getPeerInfo();
+            joinRoom(peer_name, room_id);
+        });
+    } else {
+        if (!getCookie(room_id + '_name')) {
+            window.localStorage.peer_name = default_name;
+        }
+        // setCookie(room_id + '_name', default_name, 30);
+        peer_name = default_name;
         if (initStream && !joinRoomWithScreen) {
             stopTracks(initStream);
             hide(initVideo);
         }
         getPeerInfo();
         joinRoom(peer_name, room_id);
-    });
+    }
 }
 
 function handleAudio(e) {
@@ -731,6 +795,7 @@ function joinRoom(peer_name, room_id) {
 
 function roomIsReady() {
     setTheme('dark');
+    BUTTONS.main.ChangeNameButton && show(ChangeNameButton);
     BUTTONS.main.exitButton && show(exitButton);
     BUTTONS.main.shareButton && show(shareButton);
     BUTTONS.main.hideMeButton && show(hideMeButton);
@@ -882,8 +947,11 @@ function handleButtons() {
     control.onmouseout = () => {
         isButtonsBarOver = false;
     };
+    ChangeNameButton.onclick = () => {
+        rc.changeUserName();
+    };
     exitButton.onclick = () => {
-        rc.exitRoom();
+        rc.redirectPage();
     };
     shareButton.onclick = () => {
         shareRoom(true);
@@ -1010,6 +1078,8 @@ function handleButtons() {
         setVideoButtonsDisabled(true);
         if (!isEnumerateVideoDevices) initEnumerateVideoDevices();
         if (isHideMeActive) rc.handleHideMe();
+        console.log("RoomClient.mediaType.video =============",RoomClient.mediaType);
+        console.log("videoSelect.value ===========",videoSelect);
         rc.produce(RoomClient.mediaType.video, videoSelect.value);
         // rc.resumeProducer(RoomClient.mediaType.video);
     };
@@ -1216,7 +1286,9 @@ async function changeCamera(deviceId) {
         .then((camStream) => {
             initVideo.className = 'mirror';
             initVideo.srcObject = camStream;
+            BodypixStream.srcObject = camStream;
             initStream = camStream;
+            setResultStream()
             console.log(
                 '04.5 ----> Success attached init cam video stream',
                 initStream.getVideoTracks()[0].getSettings(),
@@ -1226,7 +1298,62 @@ async function changeCamera(deviceId) {
             console.error('[Error] changeCamera', err);
             userLog('error', 'Error while swapping camera' + err, 'top-end');
         });
+        BodypixStream.onloadedmetadata = () => {
+            
+        webcamCanvas.width = BodypixStream.videoWidth;
+        webcamCanvas.height = BodypixStream.videoHeight;
+        tempCanvas.width = BodypixStream.videoWidth;
+        tempCanvas.height = BodypixStream.videoHeight;
+        
+    };
+    
+    BodypixStream.addEventListener("loadeddata", segmentPersons);
 }
+function segmentPersons() {
+    tempCanvasCtx.drawImage(BodypixStream, 0, 0);
+    if (previousSegmentationComplete) {
+        previousSegmentationComplete = false;
+        // Now classify the canvas image we have available.
+        model.segmentPerson(tempCanvas, segmentationProperties)
+        .then(segmentation => {
+            processSegmentation(segmentation);
+            previousSegmentationComplete = true;
+            });
+        }
+        //Call this function repeatedly to perform segmentation on all frames of the video.
+        window.requestAnimationFrame(segmentPersons);
+    }
+    
+function processSegmentation(segmentation) {
+    var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
+    //Loop through the pixels in the image
+    for(let i = 0; i < imgData.data.length; i+=4) {
+        let pixelIndex = i/4;
+        //Make the pixel transparent if it does not belong to a person using the body-pix model's output data array.
+        //This removes all pixels corresponding to the background.
+        if(segmentation.data[pixelIndex] == 0) {
+            imgData.data[i + 3] = 0;
+        }
+    }
+      //Draw the updated image on the canvas
+      webcamCanvasCtx.putImageData(imgData, 0, 0);
+
+      
+    }
+
+function setResultStream() {
+    console.log('working setResultStream')
+    const stream = webcamCanvas.captureStream();
+    initVideo.srcObject = stream;
+    initStream =stream
+    initVideo.play();
+
+    
+    if (initVideo.hidden) {
+        initVideo.hidden = false;
+    }
+}
+
 
 async function toggleScreenSharing() {
     if (initStream) {
@@ -1525,7 +1652,20 @@ function handleRoomClientEvents() {
         if (survey.enabled) {
             leaveFeedback();
         } else {
-            openURL('/newroom');
+            openURL('https://www.google.com/');
+        }
+    });
+
+    rc.on(RoomClient.EVENTS.redirect, () => {
+        console.log('Room Client leave room');
+        if (rc.isRecording() || recordingStatus.innerText != '0s') {
+            console.log('Room Client save recording before to exit');
+            rc.stopRecording();
+        }
+        if (survey.enabled) {
+            leaveFeedback();
+        } else {
+            window.location.href = 'https://www.google.com/';
         }
     });
 }
@@ -1689,7 +1829,8 @@ function isIpad(userAgent) {
 }
 
 function openURL(url, blank = false) {
-    blank ? window.open(url, '_blank') : (window.location.href = url);
+    window.location.reload();
+    // blank ? window.open(url, '_blank') : (window.location.href = url);
 }
 
 function setCookie(name, value, expDays) {

@@ -20,8 +20,9 @@ const BUTTONS = {
         participantsButton: true,
         whiteboardButton: true,
         settingsButton: true,
-        aboutButton: true, // Please keep me always visible, thank you!
+        aboutButton: false, // Please keep me always visible, thank you!
         exitButton: true,
+        ChangeNameButton: true,
     },
     settings: {
         lockRoomButton: true,

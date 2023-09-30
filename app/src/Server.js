@@ -275,7 +275,7 @@ function startServer() {
 
     // mirotalk about
     app.get(['/about'], (req, res) => {
-        res.sendFile(views.about);
+        
     });
 
     // ####################################################

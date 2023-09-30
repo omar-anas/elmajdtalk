@@ -63,7 +63,7 @@
     width: auto;
     height: 25px;
     border-radius: 5px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .videoAvatarImage {
@@ -187,7 +187,22 @@ video:hover {
 video:fullscreen {
     object-fit: contain;
     opacity: 1;
+    background-color:rgb(255, 255, 255) !important;
 }
+
+video:fullscreen::backdrop
+{
+    background-color: white !important;
+}
+::backdrop
+{
+    background-color: white !important;
+}
+:not(:root):fullscreen::backdrop {
+    background-color: white !important;
+}
+
+
 
 .mirror {
     -webkit-transform: rotateY(180deg);

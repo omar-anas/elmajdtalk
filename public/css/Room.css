@@ -202,6 +202,9 @@ body {
     cursor: default;
 }
 
+#ChangeNameButton {
+    color: rgb(26, 20, 198);
+}
 #exitButton {
     color: red;
 }

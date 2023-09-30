@@ -50,6 +50,13 @@ const icons = {
     fileReceive: '<i class="fa-solid fa-file-import"></i>',
 };
 
+// let model;
+//         const loadingModel= async() =>{
+        
+//             model = await bodyPix.load()
+//         }
+//         loadingModel()
+
 const image = {
     about: '../images/mirotalksfu-logo.png',
     avatar: '../images/mirotalksfu-logo.png',
@@ -81,6 +88,7 @@ const mediaType = {
 const _EVENTS = {
     openRoom: 'openRoom',
     exitRoom: 'exitRoom',
+    redirect:'redirect',
     startRec: 'startRec',
     pauseRec: 'pauseRec',
     resumeRec: 'resumeRec',
@@ -186,7 +194,7 @@ class RoomClient {
         this.receiveInProgress = false;
         this.fileSharingInput = '*';
         this.chunkSize = 1024 * 16; // 16kb/s
-
+        this.previousSegmentationComplete=true;
         // Encodings
         this.forceVP8 = false; // Force VP8 codec for webcam and screen sharing
         this.forceVP9 = false; // Force VP9 codec for webcam and screen sharing
@@ -268,6 +276,7 @@ class RoomClient {
             });
     }
 
+
     async join(data) {
         this.socket
             .request('join', data)
@@ -286,10 +295,10 @@ class RoomClient {
                     const peers = new Map(JSON.parse(room.peers));
                     for (let peer of Array.from(peers.keys()).filter((id) => id !== this.peer_id)) {
                         let peer_info = peers.get(peer).peer_info;
-                        if (peer_info.peer_name == this.peer_name) {
-                            console.log('00-WARNING ----> Username already in use');
-                            return this.userNameAlreadyInRoom();
-                        }
+                        // if (peer_info.peer_name == this.peer_name) {
+                        //     console.log('00-WARNING ----> Username already in use');
+                        //     return this.userNameAlreadyInRoom();
+                        // }
                     }
                     await this.joinAllowed(room);
                 }.bind(this),
@@ -670,6 +679,42 @@ class RoomClient {
     // CHECK USER
     // ####################################################
 
+    async selectingName(){
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            background: swalBackground,
+            title: 'Elmajd Academy',
+            input: 'text',
+            inputPlaceholder: 'Enter your name',
+            inputValue: default_name,
+            html: initUser, // Inject HTML
+            confirmButtonText: `Join meeting`,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+            },
+            inputValidator: (name) => {
+                if (!name) return 'Please enter your name';
+                name = filterXSS(name);
+                if (isHtml(name)) return 'Invalid name!';
+                if (!getCookie(room_id + '_name')) {
+                    window.localStorage.peer_name = name;
+                }
+                setCookie(room_id + '_name', name, 30);
+                peer_name = name;
+            },
+        }).then(() => {
+            if (initStream && !joinRoomWithScreen) {
+                stopTracks(initStream);
+                hide(initVideo);
+            }
+            getPeerInfo();
+            joinRoom(peer_name, room_id);
+        });
+    }
     async userNameAlreadyInRoom() {
         this.sound('alert');
         Swal.fire({
@@ -766,19 +811,39 @@ class RoomClient {
         if (videoPrivacyBtn) videoPrivacyBtn.style.display = screen ? 'none' : 'inline';
 
         console.log(`Media constraints ${type}:`, mediaConstraints);
-
+        
         let stream;
         try {
             if (init) {
+                console.log("========init stream is assigned" , initStream)
                 stream = initStream;
             } else {
-                stream = screen
-                    ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
-                    : await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                console.log("========only stream is assigned" )
+                // stream = screen
+                // ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
+                // : await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                if(screen){
+                   stream = await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
+                }else if(initStream===null){
+                    stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                }else{
+                    //stream  = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+                    stream = initStream;
+                }
+                
             }
+            
+            setTimeout(() => {
+                
+                console.log("========initStream.getVideoTracks()[0]",initStream.getVideoTracks()[0] )
+                console.log("========stream.getVideoTracks()[0]",stream.getVideoTracks()[0] )
+                console.log("========stream.getAudioTracks()[0]",stream.getAudioTracks()[0] )
+                console.log("========initStream.getAudioTracks()[0]",initStream.getAudioTracks()[0] )
+                console.log("stream",stream);
+            }, 10000);
 
             console.log('Supported Constraints', navigator.mediaDevices.getSupportedConstraints());
-
+            console.log("stream",stream);
             const track = audio ? stream.getAudioTracks()[0] : stream.getVideoTracks()[0];
 
             console.log(`${type} settings ->`, track.getSettings());
@@ -961,7 +1026,7 @@ class RoomClient {
         const frameRate = {
             min: 5,
             ideal: 15,
-            max: 30,
+            max: 60,
         };
         let videoConstraints = {
             audio: false,
@@ -1281,6 +1346,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !isScreen && elem.setAttribute('name', this.peer_id);
                 elem.setAttribute('playsinline', true);
+                elem.style.backgroundColor = "red";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.muted = true;
@@ -1647,6 +1713,7 @@ class RoomClient {
                 elem.setAttribute('id', id);
                 !remoteIsScreen && elem.setAttribute('name', remotePeerId);
                 elem.setAttribute('playsinline', true);
+                elem.style.backgroundColor = "red";
                 elem.controls = isVideoControlsOn;
                 elem.autoplay = true;
                 elem.className = '';
@@ -1997,11 +2064,71 @@ class RoomClient {
         this.exit();
     }
 
+    
+    redirect(offline = false){
+        let clean = function () {
+            this._isConnected = false;
+            this.consumerTransport.close();
+            this.producerTransport.close();
+            this.socket.off('disconnect');
+            this.socket.off('newProducers');
+            this.socket.off('consumerClosed');
+        }.bind(this);
+
+        if (!offline) {
+            this.socket
+            .request('exitRoom')
+            .then((e) => console.log('Exit Room', e))
+                .catch((e) => console.warn('Exit Room ', e))
+                .finally(
+                    function () {
+                        clean();
+                    }.bind(this),
+                );
+            } else {
+            clean();
+        }
+        this.event(_EVENTS.redirect);
+    }
+    
+    redirectPage(){
+        this.redirect()
+    }
+
+    changeName(offline = false){
+        let clean = function () {
+            this._isConnected = false;
+            this.consumerTransport.close();
+            this.producerTransport.close();
+            this.socket.off('disconnect');
+            this.socket.off('newProducers');
+            this.socket.off('consumerClosed');
+        }.bind(this);
+
+        if (!offline) {
+            this.socket
+            .request('exitRoom')
+            .then((e) => console.log('Exit Room', e))
+                .catch((e) => console.warn('Exit Room ', e))
+                .finally(
+                    function () {
+                        clean();
+                    }.bind(this),
+                );
+            } else {
+            clean();
+        }
+        window.localStorage.clear();
+        window.location.reload();
+    }
+
+    changeUserName(){
+        this.changeName()
+    }
     // ####################################################
     // HELPERS
     // ####################################################
-
-    attachMediaStream(elem, stream, type, who) {
+     attachMediaStream(elem, stream, type, who) {
         let track;
         switch (type) {
             case mediaType.audio:
@@ -2013,11 +2140,90 @@ class RoomClient {
                 break;
         }
         const consumerStream = new MediaStream();
-        consumerStream.addTrack(track);
+        consumerStream.addTrack(track); 
         elem.srcObject = consumerStream;
         console.log(who + ' Success attached media ' + type);
     }
 
+    // addVirtualBackGround(stream){
+    //     var webcamCanvas = document.createElement("canvas");
+    //     var webcamCanvasCtx = webcamCanvas.getContext('2d');
+    //     var BodypixStream =document.createElement("video");
+    //     var tempCanvas = document.createElement('canvas');
+    //     var tempCanvasCtx = tempCanvas.getContext('2d');
+
+    //     BodypixStream.width = initVideo.videoWidth;
+    //     BodypixStream.height = initVideo.videoHeight;
+    //     //In Memory Canvas used for model prediction
+    //     webcamCanvas.hidden = true;
+    //     BodypixStream.hidden = true
+    //     document.body.appendChild(BodypixStream)
+    //     BodypixStream.srcObject = stream;
+    //     BodypixStream.play()
+
+        
+        
+        
+    //     BodypixStream.onloadedmetadata = () => {
+    //         webcamCanvas.width = BodypixStream.videoWidth;
+    //         webcamCanvas.height = BodypixStream.videoHeight;
+    //         tempCanvas.width = BodypixStream.videoWidth;
+    //         tempCanvas.height = BodypixStream.videoHeight;
+            
+            
+    //     };
+    //     BodypixStream.addEventListener("loadeddata", this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
+    //     setTimeout(() => {
+    //         return webcamCanvas.captureStream();
+            
+    //     }, 1000);
+        
+    // }
+
+    
+    // segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx) {
+    //     let segmentationProperties = {
+    //         segmentationThreshold: 0.7,
+    //         internalResolution: 'low'
+    //     }
+    //     //console.log(tempCanvasCtx,"tempCanvasCtx");
+    //     //console.log(this.tempCanvasCtx);
+    //     tempCanvasCtx.drawImage(BodypixStream, 0, 0);
+    //     if (this.previousSegmentationComplete) {
+    //         this.previousSegmentationComplete = false;
+    //         // Now classify the canvas image we have available.
+    //         //console.log("model",model);
+    //         //console.log(model.segmentPerson);
+    //         model.segmentPerson(tempCanvas, segmentationProperties)
+    //         .then(segmentation => {
+    //             this.processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx);
+    //             this.previousSegmentationComplete = true;
+    //             });
+    //         }
+    //         //Call this function repeatedly to perform segmentation on all frames of the BodypixStream.
+    //         window.requestAnimationFrame(this.segmentPersons(tempCanvas,BodypixStream,tempCanvasCtx,webcamCanvas ,webcamCanvasCtx));
+    //     }
+        
+    //  processSegmentation(segmentation,tempCanvasCtx ,webcamCanvas,webcamCanvasCtx) {
+    //     var imgData = tempCanvasCtx.getImageData(0, 0, webcamCanvas.width, webcamCanvas.height);
+    //     //Loop through the pixels in the image
+    //     for(let i = 0; i < imgData.data.length; i+=4) {
+    //         let pixelIndex = i/4;
+    //         //Make the pixel transparent if it does not belong to a person using the body-pix model's output data array.
+    //         //This removes all pixels corresponding to the background.
+    //         if(segmentation.data[pixelIndex] == 0) {
+    //             imgData.data[i + 3] = 0;
+    //         }
+            
+    //     }
+    //       //Draw the updated image on the canvas
+    //       webcamCanvasCtx.putImageData(imgData, 0, 0);
+    //       console.log("working");
+    
+          
+    //     }
+
+        
     async attachSinkId(elem, sinkId) {
         if (typeof elem.sinkId !== 'undefined') {
             elem.setSinkId(sinkId)
@@ -2040,6 +2246,7 @@ class RoomClient {
             this.userLog('error', error, 'top-end');
         }
     }
+
 
     event(evt) {
         if (this.eventListeners.has(evt)) {
