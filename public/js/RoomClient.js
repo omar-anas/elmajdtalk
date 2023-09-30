@@ -2627,6 +2627,7 @@ class RoomClient {
 
     handleVideoObjectFit(value) {
         document.documentElement.style.setProperty('--videoObjFit', value);
+        document.documentElement.style.setProperty('background', 'red');
     }
 
     handleVideoControls(value) {
