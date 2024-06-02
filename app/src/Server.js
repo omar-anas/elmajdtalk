@@ -62,9 +62,9 @@ const io = require('socket.io')(httpsServer, {
 const host = 'https://' + 'localhost' + ':' + config.server.listen.port; // config.server.listen.ip
 
 const hostCfg = {
-    protected: config.host.protected,
-    username: config.host.username,
-    password: config.host.password,
+    protected: true,
+    username: 'username',
+    password: 'yes' ,
     authenticated: !config.host.protected,
 };
 
@@ -229,7 +229,7 @@ function startServer() {
                 res.sendFile(views.newRoom);
             } else {
                 hostCfg.authenticated = false;
-                res.sendFile(views.newRoom);
+                res.sendFile(views.login);
             }
         } else {
             res.sendFile(views.newRoom);
