@@ -194,7 +194,7 @@ function startServer() {
     app.get(['/'], (req, res) => {
         if (hostCfg.protected == true) {
             hostCfg.authenticated = false;
-            res.sendFile(views.newRoom);
+            res.sendFile(views.login);
         } else {
             res.sendFile(views.newRoom);
         }
