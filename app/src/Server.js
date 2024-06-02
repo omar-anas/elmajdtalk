@@ -217,7 +217,7 @@ function startServer() {
                 res.sendFile(views.newRoom);
             }
         } else {
-            res.redirect('/');
+            res.sendFile(views.login);
         }
     });
 
