@@ -62,7 +62,7 @@ const io = require('socket.io')(httpsServer, {
 const host = 'https://' + 'localhost' + ':' + config.server.listen.port; // config.server.listen.ip
 
 const hostCfg = {
-    protected: false,
+    protected: true,
     username: 'username',
     password: 'yes' ,
     authenticated: !config.host.protected,
@@ -204,18 +204,28 @@ function startServer() {
     // handle login on host protected
     app.get(['/login'], (req, res) => {
         if (hostCfg.protected == true) {
-            let ip = getIP(req);
+            // let ip = getIP(req);
+            // log.debug(`Request login to host from: ${ip}`, req.query);
+            // const { username, password } = checkXSS(req.query);
+            // if (username == hostCfg.username && password == hostCfg.password) {
+            //     hostCfg.authenticated = true;
+            //     authHost = new Host(ip, true);
+            //     log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
+            //     res.sendFile(views.newRoom);
+            // }
+             let ip = getIP(req);
             log.debug(`Request login to host from: ${ip}`, req.query);
-            const { username, password } = checkXSS(req.query);
-            if (username == hostCfg.username && password == hostCfg.password) {
+            const {password } = checkXSS(req.query);
+            if ( password == hostCfg.password) {
                 hostCfg.authenticated = true;
                 authHost = new Host(ip, true);
                 log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
                 res.sendFile(views.newRoom);
-            } else {
+            }
+             else {
                 log.debug('LOGIN KO', { ip: ip, authorized: false });
                 hostCfg.authenticated = false;
-                res.sendFile(views.newRoom);
+                res.sendFile(views.password);
             }
         } else {
             //console.log(localStorage.getItem("initialOTP"));
