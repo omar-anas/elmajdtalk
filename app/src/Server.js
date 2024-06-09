@@ -119,6 +119,7 @@ const views = {
     about: path.join(__dirname, '../../', 'public/views/about.html'),
     landing: path.join(__dirname, '../../', 'public/views/landing.html'),
     login: path.join(__dirname, '../../', 'public/views/login.html'),
+    password: path.join(__dirname, '../../', 'public/views/password.html'),
     newRoom: path.join(__dirname, '../../', 'public/views/newroom.html'),
     notFound: path.join(__dirname, '../../', 'public/views/404.html'),
     permission: path.join(__dirname, '../../', 'public/views/permission.html'),
