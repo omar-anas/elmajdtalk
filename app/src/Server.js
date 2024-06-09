@@ -217,7 +217,7 @@ function startServer() {
                 res.sendFile(views.newRoom);
             }
         } else {
-            console.log(localStorage.getItem("initialOTP"));
+            //console.log(localStorage.getItem("initialOTP"));
             res.sendFile(views.password);
         }
     });
