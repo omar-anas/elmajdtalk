@@ -194,7 +194,7 @@ function startServer() {
     app.get(['/'], (req, res) => {
         if (hostCfg.protected == true) {
             hostCfg.authenticated = false;
-            res.sendFile(views.login);
+            res.sendFile(views.password);
         } else {
             res.sendFile(views.newRoom);
         }
@@ -217,7 +217,8 @@ function startServer() {
                 res.sendFile(views.newRoom);
             }
         } else {
-            res.sendFile(views.login);
+            console.log(localStorage.getItem("initialOTP"));
+            res.sendFile(views.password);
         }
     });
 
