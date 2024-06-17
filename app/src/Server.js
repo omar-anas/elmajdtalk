@@ -213,18 +213,18 @@ function startServer() {
             //     log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
             //     res.sendFile(views.newRoom);
             // }
-             let ip = getIP(req);
-            log.debug(`Request login to host from: ${ip}`, req.query);
-            const {password } = checkXSS(req.query);
-            if ( password == hostCfg.password) {
-                hostCfg.authenticated = true;
+             
+            const {password } = checkXSS(req.body.password);
+            const {username } = checkXSS(req.body.username);
+            const {newPassword } = checkXSS(req.body.newPassword);
+            if ( password == hostCfg.password && username == hostCfg.username ) {
+                
                 authHost = new Host(ip, true);
                 log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
                 res.sendFile(views.newRoom);
             }
              else {
-                log.debug('LOGIN KO', { ip: ip, authorized: false });
-                hostCfg.authenticated = false;
+               
                 res.sendFile(views.password);
             }
         } else {
@@ -263,11 +263,23 @@ function startServer() {
 
     // join room by id
     app.get('/join/:roomId', (req, res) => {
-        if (hostCfg.authenticated) {
-            res.sendFile(views.room);
-        } else {
-            res.redirect('/');
+        if(hostCfg.protected == true){
+            if(req.body.pass =='omar'){
+                res.sendFile(views.room);
+            }
+            else{
+                res.sendFile(views.password);
+            }
         }
+        else {
+            res.sendFile(views.room);
+        }
+
+        // if (hostCfg.authenticated) {
+        //     res.sendFile(views.room);
+        // } else {
+        //     res.redirect('/');
+        // }
     });
 
     // not specified correctly the room id
