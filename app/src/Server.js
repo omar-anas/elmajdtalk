@@ -62,7 +62,7 @@ const io = require('socket.io')(httpsServer, {
 const host = 'https://' + 'localhost' + ':' + config.server.listen.port; // config.server.listen.ip
 
 const hostCfg = {
-    protected: false,
+    protected: true,
     username: 'username',
     password: 'yes' ,
     authenticated: !config.host.protected,
