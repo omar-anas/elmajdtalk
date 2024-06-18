@@ -241,7 +241,7 @@ function startServer() {
                 res.sendFile(views.newRoom);
             } else {
                 hostCfg.authenticated = false;
-                res.sendFile(views.login);
+                res.sendFile(views.newRoom);
             }
         } else {
             res.sendFile(views.newRoom);
