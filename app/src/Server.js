@@ -216,7 +216,7 @@ function startServer() {
              
             
             if (hostCfg.password == req.query.password &&  hostCfg.username == req.query.username ) {
-                
+                let ip = getIP(req);
                 authHost = new Host(ip, true);
                 log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
                 res.sendFile(views.newRoom);
