@@ -195,7 +195,7 @@ function startServer() {
     app.get(['/'], (req, res) => {
         if (hostCfg.protected == true) {
             hostCfg.authenticated = false;
-            res.sendFile(views.password);
+            res.sendFile(views.login);
         } else {
             res.sendFile(views.newRoom);
         }
@@ -214,8 +214,8 @@ function startServer() {
             //     res.sendFile(views.newRoom);
             // }
              
-            const {password } = checkXSS(req.body.password);
-            const {username } = checkXSS(req.body.username);
+            const {password } = checkXSS(req.query.password);
+            const {username } = checkXSS(req.query.username);
             const {newPassword } = checkXSS(req.body.newPassword);
             if ( password == hostCfg.password && username == hostCfg.username ) {
                 
