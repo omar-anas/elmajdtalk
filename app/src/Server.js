@@ -214,10 +214,8 @@ function startServer() {
             //     res.sendFile(views.newRoom);
             // }
              
-            const {password } = checkXSS(req.query.password);
-            const {username } = checkXSS(req.query.username);
-            const {newPassword } = checkXSS(req.query.newPassword);
-            if (hostCfg.password == password &&  hostCfg.username == username ) {
+            
+            if (hostCfg.password == req.query.password &&  hostCfg.username == req.query.username ) {
                 
                 authHost = new Host(ip, true);
                 log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
@@ -241,7 +239,7 @@ function startServer() {
                 res.sendFile(views.newRoom);
             } else {
                 hostCfg.authenticated = false;
-                res.sendFile(views.newRoom);
+                res.sendFile(views.login);
             }
         } else {
             res.sendFile(views.newRoom);
