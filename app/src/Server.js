@@ -225,7 +225,7 @@ function startServer() {
             }
              else {
                
-                res.sendFile(views.password);
+                res.sendFile(views.login);
             }
         } else {
             //console.log(localStorage.getItem("initialOTP"));
