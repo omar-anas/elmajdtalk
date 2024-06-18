@@ -264,7 +264,8 @@ function startServer() {
     // join room by id
     app.get('/join/:roomId', (req, res) => {
         if(hostCfg.protected == true){
-            if(req.query.password ==CryptoJS.SHA256('omar').toString()){
+            let password = CryptoJS.SHA256('omar').toString()
+            if(req.query.password == password){
                 res.sendFile(views.room);
             }
             else{
