@@ -216,7 +216,7 @@ function startServer() {
              
             const {password } = checkXSS(req.query.password);
             const {username } = checkXSS(req.query.username);
-            const {newPassword } = checkXSS(req.body.newPassword);
+            const {newPassword } = checkXSS(req.query.newPassword);
             if ( password == hostCfg.password && username == hostCfg.username ) {
                 
                 authHost = new Host(ip, true);
