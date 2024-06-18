@@ -63,7 +63,7 @@ const host = 'https://' + 'localhost' + ':' + config.server.listen.port; // conf
 
 const hostCfg = {
     protected: true,
-    username: 'username',
+    username: 'omar',
     password: 'yes' ,
     authenticated: !config.host.protected,
 };
@@ -217,7 +217,7 @@ function startServer() {
             const {password } = checkXSS(req.query.password);
             const {username } = checkXSS(req.query.username);
             const {newPassword } = checkXSS(req.query.newPassword);
-            if ( password == hostCfg.password && username == hostCfg.username ) {
+            if (hostCfg.password == password &&  hostCfg.username == username ) {
                 
                 authHost = new Host(ip, true);
                 log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
