@@ -63,8 +63,8 @@ const host = 'https://' + 'localhost' + ':' + config.server.listen.port; // conf
 
 const hostCfg = {
     protected: true,
-    username: 'omar',
-    password: 'yes' ,
+    username: 'IbrahimElmajd',
+    password: 'Aabcd123' ,
     OTP: 'peace' ,
     authenticated: !config.host.protected,
 };
