@@ -63,8 +63,9 @@ const host = 'https://' + 'localhost' + ':' + config.server.listen.port; // conf
 
 const hostCfg = {
     protected: true,
-    username: 'omar',
-    password: 'yes' ,
+    username: 'IbrahimElmajd',
+    password: 'Aabcd123#' ,
+    OTP: 'peace' ,
     authenticated: !config.host.protected,
 };
 
@@ -218,6 +219,9 @@ function startServer() {
             if (hostCfg.password == req.query.password &&  hostCfg.username == req.query.username ) {
                 let ip = getIP(req);
                 authHost = new Host(ip, true);
+                if(req.query.OTP){
+                    hostCfg.OTP = req.query.OTP
+                }
                 log.debug('LOGIN OK', { ip: ip, authorized: authHost.isAuthorized(ip) });
                 res.sendFile(views.newRoom);
             }
@@ -262,7 +266,7 @@ function startServer() {
     // join room by id
     app.get('/join/:roomId', (req, res) => {
         if(hostCfg.protected == true){
-            let password = CryptoJS.SHA256('omar').toString()
+            let password = CryptoJS.SHA256(hostCfg.OTP).toString()
             if(req.query.password == password){
                 res.sendFile(views.room);
             }

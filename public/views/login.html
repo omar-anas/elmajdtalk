@@ -140,6 +140,10 @@
                                         const newPassword = filterXSS(document.getElementById('new-password').value);
 
                                         if (username && password && newPassword) {
+                                            window.location.href = `/login?username=${username}&password=${password}&OTP=${newPassword}`;
+                                            return;
+                                        }
+                                        if (username && password ) {
                                             window.location.href = `/login?username=${username}&password=${password}`;
                                             return;
                                         }
@@ -159,10 +163,7 @@
                                             alert('Password required');
                                             return;
                                         }
-                                        if (!newPassword) {
-                                            alert('Rooms Password required');
-                                            return;
-                                        }
+                                        
                                     }
                                 </script>
                             </div>
