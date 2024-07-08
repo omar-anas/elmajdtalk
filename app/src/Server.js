@@ -65,7 +65,7 @@ const hostCfg = {
     protected: true,
     username: 'IbrahimElmajd',
     password: 'Aabcd123' ,
-    OTP: 'peace' ,
+    OTP: '1988' ,
     authenticated: !config.host.protected,
 };
 
